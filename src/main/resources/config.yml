@@ -1,0 +1,13 @@
+servers:
+  first:
+    item:
+      type: 'grass'
+      name: '&cHardcore Factions'
+      lore:
+        - '&bOnline: &a{online}'
+        - '&bSlots: &a{slots}'
+        - '&bIn Queue: &a{queue}'
+    
+selector:
+  item: compass
+  name: '&b|&a Servers &b|'

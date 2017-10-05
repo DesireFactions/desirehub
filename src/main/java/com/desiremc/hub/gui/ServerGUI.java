@@ -1,7 +1,11 @@
 package com.desiremc.hub.gui;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.gui.Menu;
@@ -13,25 +17,27 @@ import com.desiremc.hub.session.ServerHandler;
 public class ServerGUI extends Menu
 {
 
-    public ServerGUI()
-    {
-        super(DesireHub.getConfigHandler().getString("inventory.title"), 1);
+    private static ServerGUI instance;
 
-        loadServers();
+    private ServerGUI()
+    {
+        super(DesireHub.getLangHandler().getString("inventory.title"), 1);
+
+        reloadServers();
     }
 
-    private void loadServers()
+    private void reloadServers()
     {
         int i = 0;
-        for (Server server : ServerHandler.getInstance().getServers())
+        for (Server server : ServerHandler.getServers())
         {
-            addMenuItem(new MenuItem(server.getName(), getItem(server))
+            addMenuItem(new MenuItem(DesireHub.getConfigHandler().getString("servers." + server.getName() + ".item.name"), getItem(server))
             {
 
                 @Override
                 public void onClick(Player player)
                 {
-                    // TODO redirect them to the right server
+                    ServerHandler.processPlayer(server, player);
                 }
             }, i);
             i++;
@@ -40,7 +46,32 @@ public class ServerGUI extends Menu
 
     private ItemStack getItem(Server server)
     {
-        return new ItemStack(DesireCore.getItemHandler().get(DesireHub.getConfigHandler().getString("servers." + server.getName() + ".item")));
+        ItemStack item = DesireCore.getItemHandler().get(DesireHub.getConfigHandler().getString("servers." + server.getName() + ".item.type"), 1);
+
+        ItemMeta meta = item.getItemMeta();
+
+        List<String> load = DesireHub.getConfigHandler().getStringList("servers." + server.getName() + ".item.lore");
+        List<String> lore = new LinkedList<>();
+
+        for (String str : load)
+        {
+            lore.add(str.replace("{online}", String.valueOf(server.getOnline())).replace("{slots}", String.valueOf(server.getSlots())).replace("{queue}", String.valueOf(ServerHandler.getQueueCount(server.getId()))));
+        }
+
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    public static void loadServers()
+    {
+        instance = new ServerGUI();
+    }
+
+    public static ServerGUI getInstance()
+    {
+        return instance;
     }
 
 }

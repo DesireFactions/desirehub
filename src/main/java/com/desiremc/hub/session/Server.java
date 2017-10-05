@@ -12,19 +12,24 @@ public class Server
     
     private String name;
 
-    private int maxCount;
+    private int online;
 
-    private int currentCount;
+    private int slots;
 
-    public Server(String name, int maxCount, int currentCount)
+    public Server(String name, int slots, int online)
     {
         this.name = name;
-        this.maxCount = maxCount;
-        this.currentCount = currentCount;
+        this.slots = slots;
+        this.online = online;
     }
 
     public Server()
     {
+    }
+    
+    public int getId()
+    {
+        return id;
     }
 
     public String getName()
@@ -32,14 +37,14 @@ public class Server
         return name;
     }
 
-    public int getMaxCount()
+    public int getSlots()
     {
-        return maxCount;
+        return slots;
     }
 
-    public int getCurrentCount()
+    public int getOnline()
     {
-        return currentCount;
+        return online;
     }
 
     public void setName(String name)
@@ -47,14 +52,14 @@ public class Server
         this.name = name;
     }
 
-    public void setMaxCount(int maxCount)
+    public void setMaxCount(int slots)
     {
-        this.maxCount = maxCount;
+        this.slots = slots;
     }
 
-    public void setCurrentCount(int currentCount)
+    public void setOnline(int online)
     {
-        this.currentCount = currentCount;
+        this.online = online;
     }
 
 }
