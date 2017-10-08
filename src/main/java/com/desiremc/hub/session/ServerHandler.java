@@ -1,14 +1,16 @@
 package com.desiremc.hub.session;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.mongodb.morphia.dao.BasicDAO;
 
 import com.desiremc.core.DesireCore;
+import com.desiremc.core.session.Rank;
+import com.desiremc.core.session.Session;
+import com.desiremc.core.session.SessionHandler;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.gui.ServerGUI;
 import com.google.common.io.ByteArrayDataOutput;
@@ -23,19 +25,11 @@ public class ServerHandler extends BasicDAO<Server, Long>
 
     private static List<Server> servers;
 
-    private static HashMap<Integer, List<Player>> queue;
-
     private ServerHandler()
     {
         super(Server.class, DesireCore.getInstance().getMongoWrapper().getDatastore());
 
         servers = find().asList();
-
-        queue = new HashMap<>();
-        for (Server server : servers)
-        {
-            queue.put(server.getId(), new LinkedList<>());
-        }
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(DesireHub.getInstance(), new Runnable()
         {
@@ -48,11 +42,63 @@ public class ServerHandler extends BasicDAO<Server, Long>
         }, 0, 200);
     }
 
-    public static Server getServer(String server)
+    public static void update()
+    {
+        Server search;
+        for (Server server : servers)
+        {
+            search = instance.findOne("id", server.getId());
+            if (search != null)
+            {
+                server.update(search.getOnline(), search.getSlots());
+                server.setOnline(search.getOnline());
+                server.setMaxCount(search.getOnline());
+            }
+        }
+    }
+
+    public static void processPlayer(Server server, Player player)
+    {
+        Session s = SessionHandler.getSession(player);
+        if (server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER)
+        {
+            sendToServer(server, player);
+        }
+        else
+        {
+            ListIterator<Session> queue = server.getQueue().listIterator();
+            if (s.getRank().isDonor() && queue.hasNext())
+            {
+                Session next;
+                while(queue.hasNext())
+                {
+                    next = queue.next();
+                    if (next.getRank().getId() < s.getRank().getId() || !queue.hasNext())
+                    {
+                        queue.add(s);
+                    }
+                }
+            }
+            else
+            {
+                server.addToQueue(s);
+            }
+        }
+    }
+
+    public static void sendToServer(Server server, Player player)
+    {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(server.getName());
+        player.sendPluginMessage(DesireHub.getInstance(), "BungeeCord", out.toByteArray());
+    }
+
+    public static Server getServer(String name)
     {
         for (Server s : servers)
         {
-            if (s.getName().equalsIgnoreCase(server))
+            if (s.getName().equals(name))
             {
                 return s;
             }
@@ -60,39 +106,21 @@ public class ServerHandler extends BasicDAO<Server, Long>
         return null;
     }
 
-    public static void update()
+    public static Server getServer(int id)
     {
-        servers = instance.find().asList();
-    }
-
-    public static void processPlayer(Server server, Player player)
-    {
-        if (server.getSlots() > server.getOnline())
+        for (Server s : servers)
         {
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Connect");
-            out.writeUTF(server.getName());
-            player.sendPluginMessage(DesireHub.getInstance(), "BungeeCord", out.toByteArray());
+            if (s.getId() == id)
+            {
+                return s;
+            }
         }
+        return null;
     }
 
     public static List<Server> getServers()
     {
         return servers;
-    }
-
-    public static void addQueue(int server, Player p)
-    {
-        List<Player> players = queue.get(server);
-        if (players != null)
-        {
-            players.add(p);
-        }
-    }
-
-    public static int getQueueCount(int server)
-    {
-        return queue.get(server).size();
     }
 
     public static void initialize()

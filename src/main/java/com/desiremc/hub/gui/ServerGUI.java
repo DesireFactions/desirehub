@@ -55,7 +55,7 @@ public class ServerGUI extends Menu
 
         for (String str : load)
         {
-            lore.add(str.replace("{online}", String.valueOf(server.getOnline())).replace("{slots}", String.valueOf(server.getSlots())).replace("{queue}", String.valueOf(ServerHandler.getQueueCount(server.getId()))));
+            lore.add(str.replace("{online}", String.valueOf(server.getOnline())).replace("{slots}", String.valueOf(server.getSlots())).replace("{queue}", String.valueOf(server.getQueue().size())));
         }
 
         meta.setLore(lore);
