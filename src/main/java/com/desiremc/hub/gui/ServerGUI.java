@@ -26,22 +26,31 @@ public class ServerGUI extends Menu
         reloadServers();
     }
 
-    private void reloadServers()
+    public void reloadServers()
     {
         int i = 0;
+
         for (Server server : ServerHandler.getServers())
         {
+            removeMenuItem(i);
             addMenuItem(new MenuItem(DesireHub.getConfigHandler().getString("servers." + server.getName() + ".item.name"), getItem(server))
             {
-
                 @Override
                 public void onClick(Player player)
                 {
                     ServerHandler.processPlayer(server, player);
+                    reloadServers();
                 }
             }, i);
             i++;
         }
+    }
+
+    @Override
+    public void openMenu(Player p)
+    {
+        reloadServers();
+        super.openMenu(p);
     }
 
     private ItemStack getItem(Server server)

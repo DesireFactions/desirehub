@@ -1,2 +1,6 @@
 inventory:
   title: "&3&lServers"
+chat:
+  deny: "You can't talk in the spawn."
+queue:
+  location: "&bYour spot in line for &a{server} &bis &c{position}&b."

@@ -37,7 +37,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             public void run()
             {
                 update();
-                ServerGUI.loadServers();
+                ServerGUI.getInstance().reloadServers();
             }
         }, 0, 200);
     }
@@ -50,9 +50,9 @@ public class ServerHandler extends BasicDAO<Server, Long>
             search = instance.findOne("id", server.getId());
             if (search != null)
             {
-                server.update(search.getOnline(), search.getSlots());
                 server.setOnline(search.getOnline());
                 server.setMaxCount(search.getOnline());
+                server.update();
             }
         }
     }
@@ -63,14 +63,16 @@ public class ServerHandler extends BasicDAO<Server, Long>
         if (server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER)
         {
             sendToServer(server, player);
+            clearQueues(s);
         }
-        else
+        else if (!server.getQueue().contains(s))
         {
+            clearQueues(s);
             ListIterator<Session> queue = server.getQueue().listIterator();
             if (s.getRank().isDonor() && queue.hasNext())
             {
                 Session next;
-                while(queue.hasNext())
+                while (queue.hasNext())
                 {
                     next = queue.next();
                     if (next.getRank().getId() < s.getRank().getId() || !queue.hasNext())
@@ -84,6 +86,10 @@ public class ServerHandler extends BasicDAO<Server, Long>
                 server.addToQueue(s);
             }
         }
+        else
+        {
+            DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
+        }
     }
 
     public static void sendToServer(Server server, Player player)
@@ -92,6 +98,17 @@ public class ServerHandler extends BasicDAO<Server, Long>
         out.writeUTF("Connect");
         out.writeUTF(server.getName());
         player.sendPluginMessage(DesireHub.getInstance(), "BungeeCord", out.toByteArray());
+    }
+
+    private static void clearQueues(Session s)
+    {
+        for (Server server : servers)
+        {
+            if (server.isInQueue(s))
+            {
+                server.removeFromQueue(s);
+            }
+        }
     }
 
     public static Server getServer(String name)

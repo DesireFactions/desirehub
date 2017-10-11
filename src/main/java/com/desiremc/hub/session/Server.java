@@ -84,15 +84,32 @@ public class Server
         queue.remove(s);
     }
 
+    public int getQueueLocation(Session s)
+    {
+        int loc = 1;
+        for (Session q : queue)
+        {
+            if (q.getUniqueId().equals(s.getUniqueId()))
+            {
+                return loc;
+            }
+            loc++;
+        }
+        return -1;
+    }
+
     public LinkedList<Session> getQueue()
     {
         return queue;
     }
 
-    public void update(int online, int slots)
+    public boolean isInQueue(Session s)
     {
-        this.online = online;
-        this.slots = slots;
+        return queue.contains(s);
+    }
+
+    public void update()
+    {
         if (online < slots)
         {
             int forward = slots - online;
