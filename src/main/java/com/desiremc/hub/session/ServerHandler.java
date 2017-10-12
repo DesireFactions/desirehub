@@ -39,7 +39,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
                 update();
                 ServerGUI.getInstance().reloadServers();
             }
-        }, 0, 200);
+        }, 0, 100);
     }
 
     public static void update()
