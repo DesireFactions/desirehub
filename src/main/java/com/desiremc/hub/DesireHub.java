@@ -32,8 +32,8 @@ public class DesireHub extends JavaPlugin
         saveDefaultConfig();
         saveResource("lang.yml", false);
 
-        config = new FileHandler(new File(getDataFolder(), "config.yml"));
-        lang = new LangHandler(new File(getDataFolder(), "lang.yml"));
+        config = new FileHandler(new File(getDataFolder(), "config.yml"), this);
+        lang = new LangHandler(new File(getDataFolder(), "lang.yml"), this);
 
         registerCommands();
         registerListeners();
