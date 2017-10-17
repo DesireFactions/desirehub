@@ -1,6 +1,11 @@
+prefix:
+  use: true
+  text: "&d[&b&lDesireMC&d]"
 inventory:
   title: "&3&lServers"
 chat:
   deny: "You can't talk in the spawn."
 queue:
   location: "&bYour spot in line for &a{server} &bis &c{position}&b."
+redirect:
+  deathban: "&cYou have an active deathban on &b{server}&c."

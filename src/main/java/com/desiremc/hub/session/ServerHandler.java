@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.mongodb.morphia.dao.BasicDAO;
 
 import com.desiremc.core.DesireCore;
+import com.desiremc.core.session.HCFSession;
+import com.desiremc.core.session.HCFSessionHandler;
 import com.desiremc.core.session.Rank;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
@@ -60,6 +62,12 @@ public class ServerHandler extends BasicDAO<Server, Long>
     public static void processPlayer(Server server, Player player)
     {
         Session s = SessionHandler.getSession(player);
+        HCFSession hs = HCFSessionHandler.initializeHCFSession(player.getUniqueId(), false);
+        if (hs.hasDeathBan(server.getName()))
+        {
+            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", "{server}", server.getName());
+            return;
+        }
         if (server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER)
         {
             sendToServer(server, player);
