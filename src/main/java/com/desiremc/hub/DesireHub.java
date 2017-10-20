@@ -5,6 +5,7 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.desiremc.core.DesireCore;
 import com.desiremc.core.api.FileHandler;
 import com.desiremc.core.api.LangHandler;
 import com.desiremc.core.listeners.ListenerManager;
@@ -40,6 +41,7 @@ public class DesireHub extends JavaPlugin
 
         ServerHandler.initialize();
         ServerGUI.loadServers();
+        DesireCore.getInstance().getMongoWrapper().getDatastore().ensureIndexes();
         
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }

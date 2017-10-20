@@ -31,6 +31,8 @@ public class ServerHandler extends BasicDAO<Server, Long>
     {
         super(Server.class, DesireCore.getInstance().getMongoWrapper().getDatastore());
 
+        DesireCore.getInstance().getMongoWrapper().getMorphia().map(Server.class);
+        
         servers = find().asList();
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(DesireHub.getInstance(), new Runnable()
