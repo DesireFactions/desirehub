@@ -1,11 +1,10 @@
 package com.desiremc.hub.listeners;
 
-import java.util.function.Consumer;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -20,9 +19,13 @@ import com.desiremc.hub.DesireHub;
 public class ChatListener implements Listener
 {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void chat(AsyncPlayerChatEvent event)
     {
+        if (event.isCancelled())
+        {
+            return;
+        }
         Player player = event.getPlayer();
         event.setCancelled(true);
         Session s = SessionHandler.getSession(player);
@@ -48,25 +51,17 @@ public class ChatListener implements Listener
 
         String parsedMessage = s.getRank().getId() >= Rank.ADMIN.getId() ? ChatColor.translateAlternateColorCodes('&', msg) : msg;
         System.out.println(player.getName() + ": " + parsedMessage);
-        Bukkit.getOnlinePlayers().stream().forEach(new Consumer<Player>()
+        for (Player p : Bukkit.getOnlinePlayers())
         {
-            @Override
-            public void accept(Player players)
-            {
+            new FancyMessage(s.getRank().getPrefix())
+                    .then(s.getName())
+                    .then(": ")
+                    .then(parsedMessage)
+                    .color(s.getRank().getColor())
+                    .send(p);
+            return;
 
-                if (true)
-                {
-                    new FancyMessage(s.getRank().getPrefix())
-                            .then(player.getName())
-                            .then(": ")
-                            .then(parsedMessage)
-                            .color(s.getRank().getColor())
-                            .send(players);
-                    return;
-                }
-
-            }
-        });
+        }
 
     }
 }
