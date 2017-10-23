@@ -1,6 +1,6 @@
 prefix:
   use: true
-  text: "&d[&b&lDesireMC&d]"
+  text: "&d[&b&lDesire&d]"
 inventory:
   title: "&3&lServers"
 chat:
@@ -8,4 +8,4 @@ chat:
 queue:
   location: "&bYour spot in line for &a{server} &bis &c{position}&b."
 redirect:
-  deathban: "&cYou have an active deathban on &b{server}&c."
+  deathban: "&cYour deathban on &b{server}&c ends in &e{time}&c."

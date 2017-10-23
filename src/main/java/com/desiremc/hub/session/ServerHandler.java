@@ -8,11 +8,13 @@ import org.bukkit.entity.Player;
 import org.mongodb.morphia.dao.BasicDAO;
 
 import com.desiremc.core.DesireCore;
+import com.desiremc.core.session.DeathBan;
 import com.desiremc.core.session.HCFSession;
 import com.desiremc.core.session.HCFSessionHandler;
 import com.desiremc.core.session.Rank;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.utils.DateUtils;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.gui.ServerGUI;
 import com.google.common.io.ByteArrayDataOutput;
@@ -32,7 +34,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
         super(Server.class, DesireCore.getInstance().getMongoWrapper().getDatastore());
 
         DesireCore.getInstance().getMongoWrapper().getMorphia().map(Server.class);
-        
+
         servers = find().asList();
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(DesireHub.getInstance(), new Runnable()
@@ -65,9 +67,10 @@ public class ServerHandler extends BasicDAO<Server, Long>
     {
         Session s = SessionHandler.getSession(player);
         HCFSession hs = HCFSessionHandler.initializeHCFSession(player.getUniqueId(), false);
+        DeathBan ban = hs.getActiveDeathBan(server.getName());
         if (hs.hasDeathBan(server.getName()))
         {
-            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", "{server}", server.getName());
+            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
             return;
         }
         if (server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER)
