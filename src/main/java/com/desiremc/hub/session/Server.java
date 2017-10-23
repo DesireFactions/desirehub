@@ -22,6 +22,8 @@ public class Server
     private int online;
 
     private int slots;
+    
+    private boolean status;
 
     @Transient
     private LinkedList<Session> queue;
@@ -72,6 +74,16 @@ public class Server
     public void setOnline(int online)
     {
         this.online = online;
+    }
+    
+    public boolean getStatus()
+    {
+        return status;
+    }
+    
+    public void setStatus(boolean status)
+    {
+        this.status = status;
     }
 
     public void addToQueue(Session s)

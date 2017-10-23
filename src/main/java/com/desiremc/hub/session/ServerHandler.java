@@ -73,6 +73,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
             return;
         }
+        
         if (server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER)
         {
             sendToServer(server, player);
