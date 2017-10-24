@@ -1,5 +1,6 @@
 package com.desiremc.hub.session;
 
+import java.util.LinkedList;
 import java.util.ListIterator;
 
 import org.bukkit.entity.Player;
@@ -8,7 +9,6 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
 import com.desiremc.core.session.Session;
-import com.desiremc.core.utils.LinkedList;
 
 @Entity(value = "servers", noClassnameStored = true)
 public class Server
