@@ -48,9 +48,7 @@ public class ChatListener implements Listener
         }
 
         String msg = event.getMessage();
-
         String parsedMessage = s.getRank().getId() >= Rank.ADMIN.getId() ? ChatColor.translateAlternateColorCodes('&', msg) : msg;
-        System.out.println(player.getName() + ": " + parsedMessage);
         for (Player p : Bukkit.getOnlinePlayers())
         {
             new FancyMessage(s.getRank().getPrefix())
@@ -59,7 +57,6 @@ public class ChatListener implements Listener
                     .then(parsedMessage)
                     .color(s.getRank().getColor())
                     .send(p);
-            return;
 
         }
 
