@@ -19,7 +19,7 @@ import com.desiremc.hub.DesireHub;
 public class ChatListener implements Listener
 {
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void chat(AsyncPlayerChatEvent event)
     {
         if (event.isCancelled())
