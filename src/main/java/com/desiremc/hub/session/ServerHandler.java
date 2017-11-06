@@ -66,14 +66,14 @@ public class ServerHandler extends BasicDAO<Server, Long>
     public static void processPlayer(Server server, Player player)
     {
         Session s = SessionHandler.getSession(player);
-        HCFSession hs = HCFSessionHandler.initializeHCFSession(player.getUniqueId(), false);
-        DeathBan ban = hs.getActiveDeathBan(server.getName());
-        if (hs.hasDeathBan(server.getName()))
+        HCFSession hs = HCFSessionHandler.initializeHCFSession(player.getUniqueId(), server.getName(), false);
+        DeathBan ban = hs.getActiveDeathBan();
+        if (hs.hasDeathBan())
         {
             DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
             return;
         }
-        
+
         if (server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER)
         {
             sendToServer(server, player);
