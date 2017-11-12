@@ -20,7 +20,7 @@ import com.desiremc.hub.session.ServerHandler;
 public class ConnectionListener implements Listener
 {
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOW)
     public void onJoin(PlayerJoinEvent e)
     {
         Player p = e.getPlayer();
