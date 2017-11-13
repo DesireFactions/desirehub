@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.session.SessionSetting;
 import com.desiremc.core.tablist.Entry;
 import com.desiremc.core.tablist.Tab;
 import com.desiremc.hub.DesireHub;
@@ -32,7 +33,7 @@ public class ConnectionListener implements Listener
             {
                 for (Session s : SessionHandler.getInstance().getSessions())
                 {
-                    if (s.getSettings().hasClassicTablist())
+                    if (s.getSetting(SessionSetting.CLASSICTAB))
                     {
                         applyClassic(s.getPlayer());
                     }
