@@ -9,8 +9,7 @@ import org.mongodb.morphia.dao.BasicDAO;
 
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.session.DeathBan;
-import com.desiremc.core.session.HCFSession;
-import com.desiremc.core.session.HCFSessionHandler;
+import com.desiremc.core.session.DeathBanHandler;
 import com.desiremc.core.session.Rank;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
@@ -66,9 +65,8 @@ public class ServerHandler extends BasicDAO<Server, Long>
     public static void processPlayer(Server server, Player player)
     {
         Session s = SessionHandler.getSession(player);
-        HCFSession hs = HCFSessionHandler.initializeHCFSession(player.getUniqueId(), server.getName(), false);
-        DeathBan ban = hs.getActiveDeathBan();
-        if (hs.hasDeathBan())
+        DeathBan ban = DeathBanHandler.getDeathBan(s, server.getName());
+        if (ban != null)
         {
             DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
             return;
