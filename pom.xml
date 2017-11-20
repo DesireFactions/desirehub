@@ -22,7 +22,7 @@
 		<!-- Desire Dependencies -->
 		<dependency>
 			<groupId>com.desiremc.depends</groupId>
-			<artifactId>desiredependencies</artifactId>
+			<artifactId>DesireDependencies</artifactId>
 			<version>1.0</version>
 		</dependency>
 	</dependencies>

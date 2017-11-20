@@ -61,6 +61,7 @@ public class ConnectionListener implements Listener
         return items;
     }
 
+    @SuppressWarnings("deprecation")
     private void applyClassic(Player player)
     {
         Tab tab = Tab.getByPlayer(player);
