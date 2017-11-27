@@ -6,6 +6,13 @@
 	<version>0.1</version>
 	<name>DesireHub</name>
 	<dependencies>
+		<!-- Spigot API -->
+		<dependency>
+			<groupId>org.github.paperspigot</groupId>
+			<artifactId>paperspigot-api</artifactId>
+			<version>1.7.10-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- DesireCore API -->
 		<dependency>
 			<groupId>com.desiremc</groupId>
