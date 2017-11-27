@@ -19,7 +19,6 @@ import com.desiremc.hub.DesireHub;
 public class ChatListener implements Listener
 {
 
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void chat(AsyncPlayerChatEvent event)
     {

@@ -13,8 +13,8 @@ import com.desiremc.core.DesireCore;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.core.session.SessionSetting;
-import com.desiremc.core.tablist.Entry;
-import com.desiremc.core.tablist.Tab;
+import com.desiremc.core.tablistsix.TabAPI;
+import com.desiremc.core.tablistsix.TabList;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.session.ServerHandler;
 
@@ -61,23 +61,64 @@ public class ConnectionListener implements Listener
         return items;
     }
 
-    @SuppressWarnings("deprecation")
     private void applyClassic(Player player)
     {
-        Tab tab = Tab.getByPlayer(player);
-        Entry entry;
-        int i = 0;
-        for (Player p : Bukkit.getOnlinePlayers())
+        TabList list = getTabList(player);
+        if (!list.isOld())
         {
-            entry = tab.getEntry(i / 20, i % 20);
-            entry.setText(p.getName()).send();
+            return;
+        }
+        list.clearAllSlots();
+
+        int i = 0;
+        for (Session s : SessionHandler.getInstance().getSessions())
+        {
+            list.setSlot(i, s.getName());
+            String prefix = null, name, suffix = "";
+            String str = s.getRank().getColor() + s.getName();
+
+            if (str.length() <= 16)
+            {
+                name = str;
+            }
+            else if (str.length() > 16 && str.length() <= 32 && str.charAt(15) != '§')
+            {
+                prefix = str.substring(0, str.length() - 16);
+                name = str.substring(str.length() - 16);
+            }
+            else
+            {
+                prefix = str.substring(0, 16);
+                name = str.substring(16, 32);
+                suffix = str.substring(32);
+            }
+            if (prefix != null)
+            {
+                list.setSlot(i, prefix, name, suffix);
+            }
+            else
+            {
+                list.setSlot(i, name);
+            }
             i++;
         }
+
     }
 
     private void applyHub(Player player)
     {
         applyClassic(player);
+    }
+
+    private static TabList getTabList(Player player)
+    {
+        TabList list = TabAPI.getPlayerTabList(player);
+        if (list == null)
+        {
+            list = TabAPI.createTabListForPlayer(player);
+            list.send();
+        }
+        return list;
     }
 
 }
