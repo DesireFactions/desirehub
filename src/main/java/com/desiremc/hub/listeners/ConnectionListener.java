@@ -13,8 +13,8 @@ import com.desiremc.core.DesireCore;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.core.session.SessionSetting;
-import com.desiremc.core.tablistsix.TabAPI;
-import com.desiremc.core.tablistsix.TabList;
+import com.desiremc.core.tablist.TabAPI;
+import com.desiremc.core.tablist.TabList;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.session.ServerHandler;
 
