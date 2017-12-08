@@ -31,7 +31,7 @@ public class ConnectionListener implements Listener
             @Override
             public void run()
             {
-                for (Session s : SessionHandler.getInstance().getSessions())
+                for (Session s : SessionHandler.getSessions())
                 {
                     if (s.getSetting(SessionSetting.CLASSICTAB))
                     {
@@ -71,7 +71,7 @@ public class ConnectionListener implements Listener
         list.clearAllSlots();
 
         int i = 0;
-        for (Session s : SessionHandler.getInstance().getSessions())
+        for (Session s : SessionHandler.getSessions())
         {
             list.setSlot(i, s.getName());
             String prefix = null, name, suffix = "";
