@@ -9,3 +9,12 @@ queue:
   location: "&bYour spot in line for &a{server} &bis &c{position}&b."
 redirect:
   deathban: "&cYour deathban on &b{server}&c ends in &e{time}&c."
+scoreboard:
+  - "Welcome"
+  - "{player}"
+  - "Visit our store @"
+  - "store.desirehcf.com"
+  - "Currently online"
+  - "{current}/{max}"
+  - "Log on to"
+  - "desirehcf.com"

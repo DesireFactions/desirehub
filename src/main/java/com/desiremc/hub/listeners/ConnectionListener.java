@@ -1,5 +1,15 @@
 package com.desiremc.hub.listeners;
 
+import com.desiremc.core.DesireCore;
+import com.desiremc.core.scoreboard.EntryRegistry;
+import com.desiremc.core.session.Session;
+import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.session.SessionSetting;
+import com.desiremc.core.tablist.TabAPI;
+import com.desiremc.core.tablist.TabList;
+import com.desiremc.hub.DesireHub;
+import com.desiremc.hub.session.ServerHandler;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,15 +18,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import com.desiremc.core.DesireCore;
-import com.desiremc.core.session.Session;
-import com.desiremc.core.session.SessionHandler;
-import com.desiremc.core.session.SessionSetting;
-import com.desiremc.core.tablist.TabAPI;
-import com.desiremc.core.tablist.TabList;
-import com.desiremc.hub.DesireHub;
-import com.desiremc.hub.session.ServerHandler;
 
 public class ConnectionListener implements Listener
 {
@@ -41,10 +42,16 @@ public class ConnectionListener implements Listener
                     {
                         applyHub(s.getPlayer());
                     }
+                }
 
+                int counter = 1;
+                for (String s : DesireHub.getLangHandler().getStringList("scoreboard"))
+                {
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderString(s, "{player}", p.getName(), "{current}", Bukkit.getServer().getOnlinePlayers().size(), "{max}", Bukkit.getMaxPlayers()), StringUtils.repeat(" ", counter));
+                    counter++;
                 }
             }
-        }, 5l);
+        }, 5L);
     }
 
     private ItemStack[] getItems()
