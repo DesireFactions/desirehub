@@ -47,6 +47,11 @@ public class ConnectionListener implements Listener
                     Bukkit.broadcastMessage(s);
                     EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderString(s, "{player}", p.getName(), "{current}", Bukkit.getServer().getOnlinePlayers().size(), "{max}", Bukkit.getMaxPlayers()), " ");
                 }*/
+
+                for (String message : DesireHub.getLangHandler().getStringList("welcome-message"))
+                {
+                    DesireHub.getLangHandler().sendRenderMessageCenteredNoPrefix(p, message);
+                }
             }
         }, 5L);
     }

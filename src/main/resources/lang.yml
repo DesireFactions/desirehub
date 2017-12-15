@@ -19,5 +19,8 @@ scoreboard:
   - "Log on to"
   - "desirehcf.com"
 welcome-message:
-  - "Welcome to DesireHCF"
-  - ""
+  - '&8&m----------------------------------------------------'
+  - "&eWelcome to DesireHCF"
+  - "&eVisit our store @ store.desirehcf.com"
+  - "&eVisit our forums @ reddit.com/r/desiremc"
+  - '&8&m----------------------------------------------------'
