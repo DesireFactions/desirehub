@@ -11,3 +11,6 @@ servers:
 selector:
   item: compass
   name: '&b|&a Servers &b|'
+pearl:
+  item: stick
+  name: '&b|&a Teleporter &b|'

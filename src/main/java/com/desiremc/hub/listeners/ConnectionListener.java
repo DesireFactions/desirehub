@@ -1,7 +1,6 @@
 package com.desiremc.hub.listeners;
 
 import com.desiremc.core.DesireCore;
-import com.desiremc.core.scoreboard.EntryRegistry;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.core.session.SessionSetting;
@@ -9,7 +8,6 @@ import com.desiremc.core.tablist.TabAPI;
 import com.desiremc.core.tablist.TabList;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.session.ServerHandler;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,12 +42,11 @@ public class ConnectionListener implements Listener
                     }
                 }
 
-                int counter = 1;
-                for (String s : DesireHub.getLangHandler().getStringList("scoreboard"))
+                /*for (String s : DesireHub.getLangHandler().getStringList("scoreboard"))
                 {
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderString(s, "{player}", p.getName(), "{current}", Bukkit.getServer().getOnlinePlayers().size(), "{max}", Bukkit.getMaxPlayers()), StringUtils.repeat(" ", counter));
-                    counter++;
-                }
+                    Bukkit.broadcastMessage(s);
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderString(s, "{player}", p.getName(), "{current}", Bukkit.getServer().getOnlinePlayers().size(), "{max}", Bukkit.getMaxPlayers()), " ");
+                }*/
             }
         }, 5L);
     }
@@ -64,7 +61,14 @@ public class ConnectionListener implements Listener
         meta.setDisplayName(ServerHandler.getServerSelector());
         compass.setItemMeta(meta);
 
+        ItemStack pearl = DesireCore.getItemHandler().get(DesireHub.getConfigHandler().getString("pearl.item"), 1);
+
+        ItemMeta pearlMeta = compass.getItemMeta();
+        pearlMeta.setDisplayName(ServerHandler.getPearl());
+        pearl.setItemMeta(pearlMeta);
+
         items[4] = compass;
+        items[1] = pearl;
         return items;
     }
 
