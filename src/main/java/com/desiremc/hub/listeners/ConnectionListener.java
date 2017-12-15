@@ -1,11 +1,7 @@
 package com.desiremc.hub.listeners;
 
 import com.desiremc.core.DesireCore;
-import com.desiremc.core.session.Session;
-import com.desiremc.core.session.SessionHandler;
-import com.desiremc.core.session.SessionSetting;
-import com.desiremc.core.tablist.TabAPI;
-import com.desiremc.core.tablist.TabList;
+import com.desiremc.core.scoreboard.EntryRegistry;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.session.ServerHandler;
 import org.bukkit.Bukkit;
@@ -30,23 +26,11 @@ public class ConnectionListener implements Listener
             @Override
             public void run()
             {
-                for (Session s : SessionHandler.getSessions())
-                {
-                    if (s.getSetting(SessionSetting.CLASSICTAB))
-                    {
-                        applyClassic(s.getPlayer());
-                    }
-                    else
-                    {
-                        applyHub(s.getPlayer());
-                    }
-                }
-
-                /*for (String s : DesireHub.getLangHandler().getStringList("scoreboard"))
+                for (String s : DesireHub.getLangHandler().getStringList("scoreboard"))
                 {
                     Bukkit.broadcastMessage(s);
                     EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderString(s, "{player}", p.getName(), "{current}", Bukkit.getServer().getOnlinePlayers().size(), "{max}", Bukkit.getMaxPlayers()), " ");
-                }*/
+                }
 
                 for (String message : DesireHub.getLangHandler().getStringList("welcome-message"))
                 {
@@ -75,66 +59,6 @@ public class ConnectionListener implements Listener
         items[4] = compass;
         items[1] = pearl;
         return items;
-    }
-
-    private void applyClassic(Player player)
-    {
-        TabList list = getTabList(player);
-        if (!list.isOld())
-        {
-            return;
-        }
-        list.clearAllSlots();
-
-        int i = 0;
-        for (Session s : SessionHandler.getSessions())
-        {
-            list.setSlot(i, s.getName());
-            String prefix = null, name, suffix = "";
-            String str = s.getRank().getColor() + s.getName();
-
-            if (str.length() <= 16)
-            {
-                name = str;
-            }
-            else if (str.length() > 16 && str.length() <= 32 && str.charAt(15) != '§')
-            {
-                prefix = str.substring(0, str.length() - 16);
-                name = str.substring(str.length() - 16);
-            }
-            else
-            {
-                prefix = str.substring(0, 16);
-                name = str.substring(16, 32);
-                suffix = str.substring(32);
-            }
-            if (prefix != null)
-            {
-                list.setSlot(i, prefix, name, suffix);
-            }
-            else
-            {
-                list.setSlot(i, name);
-            }
-            i++;
-        }
-
-    }
-
-    private void applyHub(Player player)
-    {
-        applyClassic(player);
-    }
-
-    private static TabList getTabList(Player player)
-    {
-        TabList list = TabAPI.getPlayerTabList(player);
-        if (list == null)
-        {
-            list = TabAPI.createTabListForPlayer(player);
-            list.send();
-        }
-        return list;
     }
 
 }
