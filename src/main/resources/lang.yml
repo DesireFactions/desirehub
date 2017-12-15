@@ -12,15 +12,11 @@ redirect:
 scoreboard:
   - "Welcome"
   - "{player}"
-  - "Visit our store @"
-  - "store.desirehcf.com"
-  - "Currently online"
-  - "{current}/{max}"
-  - "Log on to"
   - "desirehcf.com"
 welcome-message:
   - '&8&m----------------------------------------------------'
   - "&eWelcome to DesireHCF"
-  - "&eVisit our store @ store.desirehcf.com"
-  - "&eVisit our forums @ reddit.com/r/desiremc"
+  - "&eVisit our store @ &cstore.desirehcf.com"
+  - "&eVisit our forums @ &creddit.com/r/desiremc"
+  - "&eEnjoy your stay!"
   - '&8&m----------------------------------------------------'

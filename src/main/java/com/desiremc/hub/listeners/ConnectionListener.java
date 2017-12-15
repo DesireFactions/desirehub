@@ -13,6 +13,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
+import java.util.List;
+
 public class ConnectionListener implements Listener
 {
 
@@ -26,10 +29,12 @@ public class ConnectionListener implements Listener
             @Override
             public void run()
             {
-                for (String s : DesireHub.getLangHandler().getStringList("scoreboard"))
+                List<String> entries = DesireHub.getLangHandler().getStringList("scoreboard");
+                Collections.reverse(entries);
+
+                for (String s : entries)
                 {
-                    Bukkit.broadcastMessage(s);
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderString(s, "{player}", p.getName(), "{current}", Bukkit.getServer().getOnlinePlayers().size(), "{max}", Bukkit.getMaxPlayers()), " ");
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix(s, "{player}", p.getName(), "{current}", Bukkit.getServer().getOnlinePlayers().size(), "{max}", Bukkit.getMaxPlayers()), "");
                 }
 
                 for (String message : DesireHub.getLangHandler().getStringList("welcome-message"))
@@ -60,5 +65,4 @@ public class ConnectionListener implements Listener
         items[1] = pearl;
         return items;
     }
-
 }
