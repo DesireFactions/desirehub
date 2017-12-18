@@ -1,14 +1,13 @@
 package com.desiremc.hub.session;
 
-import java.util.LinkedList;
-import java.util.ListIterator;
-
+import com.desiremc.core.session.Session;
 import org.bukkit.entity.Player;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
-import com.desiremc.core.session.Session;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 @Entity(value = "servers", noClassnameStored = true)
 public class Server
@@ -22,7 +21,9 @@ public class Server
     private int online;
 
     private int slots;
-    
+
+    private ServerType type;
+
     private boolean status;
 
     @Transient
@@ -75,12 +76,12 @@ public class Server
     {
         this.online = online;
     }
-    
+
     public boolean getStatus()
     {
         return status;
     }
-    
+
     public void setStatus(boolean status)
     {
         this.status = status;
@@ -94,6 +95,16 @@ public class Server
     public void removeFromQueue(Session s)
     {
         queue.remove(s);
+    }
+
+    public void setType(ServerType type)
+    {
+        this.type = type;
+    }
+
+    public ServerType getType()
+    {
+        return type;
     }
 
     public int getQueueLocation(Session s)
@@ -139,6 +150,12 @@ public class Server
                 search.remove();
             }
         }
+    }
+
+    public enum ServerType
+    {
+        HUB,
+        HCF
     }
 
 }

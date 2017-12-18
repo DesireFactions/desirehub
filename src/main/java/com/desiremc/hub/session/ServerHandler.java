@@ -152,6 +152,17 @@ public class ServerHandler extends BasicDAO<Server, Long>
         return servers;
     }
 
+    public static int getAllPlayers()
+    {
+        int count = 0;
+
+        for (Server server : getServers())
+        {
+            count += server.getOnline();
+        }
+        return count;
+    }
+
     public static void initialize()
     {
         instance = new ServerHandler();

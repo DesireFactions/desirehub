@@ -10,9 +10,15 @@ queue:
 redirect:
   deathban: "&cYour deathban on &b{server}&c ends in &e{time}&c."
 scoreboard:
-  - "Welcome"
-  - "{player}"
-  - "desirehcf.com"
+  players:
+    enabled: true
+    message:  "&9Players: "
+  rank:
+    enabled: true
+    message:  "&9Rank: "
+  server:
+    enabled: true
+    message:  "&9Server: "
 welcome-message:
   - '&8&m----------------------------------------------------'
   - "&eWelcome to DesireHCF"

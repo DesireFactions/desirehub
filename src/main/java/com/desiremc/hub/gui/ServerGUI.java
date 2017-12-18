@@ -1,18 +1,17 @@
 package com.desiremc.hub.gui;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.gui.Menu;
 import com.desiremc.core.gui.MenuItem;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.session.Server;
 import com.desiremc.hub.session.ServerHandler;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ServerGUI extends Menu
 {
@@ -32,6 +31,11 @@ public class ServerGUI extends Menu
 
         for (Server server : ServerHandler.getServers())
         {
+            if (!Server.ServerType.HCF.equals(server.getType()))
+            {
+                continue;
+            }
+
             removeMenuItem(i);
             addMenuItem(new MenuItem(DesireHub.getConfigHandler().getString("servers." + server.getName() + ".item.name"), getItem(server))
             {
