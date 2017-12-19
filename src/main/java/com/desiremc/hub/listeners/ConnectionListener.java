@@ -36,7 +36,7 @@ public class ConnectionListener implements Listener
 
                 if (DesireHub.getLangHandler().getBoolean("scoreboard.rank.enabled"))
                 {
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.rank.message"), StringUtils.capitalize(SessionHandler.getSession(p.getUniqueId()).getRank().name().toLowerCase()));
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.rank.message"), StringUtils.capitalize(SessionHandler.getOnlineSession(p.getUniqueId()).getRank().name().toLowerCase()));
                 }
 
                 if (DesireHub.getLangHandler().getBoolean("scoreboard.server.enabled"))

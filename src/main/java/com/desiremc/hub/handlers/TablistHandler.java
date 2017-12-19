@@ -87,7 +87,7 @@ public class TablistHandler implements Listener
                 }
 
                 // get the faction's player store
-                Session user = SessionHandler.getSession(player.getUniqueId());
+                Session user = SessionHandler.getOnlineSession(player.getUniqueId());
                 if (user == null)
                 {
                     return;
@@ -102,7 +102,7 @@ public class TablistHandler implements Listener
                 // set all online players.
                 for (Player online : Bukkit.getOnlinePlayers())
                 {
-                    Session session = SessionHandler.getSession(online.getUniqueId());
+                    Session session = SessionHandler.getOnlineSession(online.getUniqueId());
 
                     if (session.getPlayer() == ignored)
                     {
