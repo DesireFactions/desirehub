@@ -1,5 +1,11 @@
 package com.desiremc.hub;
 
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.api.FileHandler;
 import com.desiremc.core.api.LangHandler;
@@ -14,12 +20,6 @@ import com.desiremc.hub.listeners.EntityListener;
 import com.desiremc.hub.listeners.InteractListener;
 import com.desiremc.hub.listeners.InventoryListener;
 import com.desiremc.hub.session.ServerHandler;
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 
 public class DesireHub extends JavaPlugin
 {
@@ -90,21 +90,21 @@ public class DesireHub extends JavaPlugin
             @Override
             public void run()
             {
-                for (Player p : Bukkit.getOnlinePlayers())
+                for (Player player : Bukkit.getOnlinePlayers())
                 {
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.players.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.players.message"), ServerHandler.getAllPlayers() + "");
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.players.message"), ServerHandler.getAllPlayers() + "");
                     }
 
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.rank.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.rank.message"), StringUtils.capitalize(SessionHandler.getSession(p).getRank().name().toLowerCase()));
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.rank.message"), SessionHandler.getOnlineSession(player.getUniqueId()).getRank().getDisplayName());
                     }
 
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.server.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.server.message"), DesireCore.getCurrentServer());
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.server.message"), DesireCore.getCurrentServer());
                     }
                 }
             }
