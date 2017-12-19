@@ -99,7 +99,7 @@ public class DesireHub extends JavaPlugin
 
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.rank.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.rank.message"), StringUtils.capitalize(SessionHandler.getSession(p.getUniqueId()).getRank().name().toLowerCase()));
+                        EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.rank.message"), StringUtils.capitalize(SessionHandler.getSession(p).getRank().name().toLowerCase()));
                     }
 
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.server.enabled"))
