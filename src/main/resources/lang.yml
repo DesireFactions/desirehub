@@ -1,8 +1,8 @@
 prefix:
   use: true
-  text: "&d[&b&lDesire&d]"
+  text: "&d[&bDesire&d]"
 inventory:
-  title: "&3&lServers"
+  title: "&c&lServers"
 chat:
   deny: "You can't talk in the spawn."
 queue:

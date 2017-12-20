@@ -20,7 +20,7 @@ public class ServerGUI extends Menu
 
     private ServerGUI()
     {
-        super(DesireHub.getLangHandler().getString("inventory.title"), 1);
+        super(DesireHub.getLangHandler().renderMessageNoPrefix("inventory.title"), 1);
 
         reloadServers();
     }
