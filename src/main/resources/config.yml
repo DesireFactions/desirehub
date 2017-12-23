@@ -1,7 +1,8 @@
 servers:
   first:
     item:
-      type: 'grass'
+      slot: 13
+      type: 'diamond_sword'
       name: '&cHardcore Factions'
       lore:
         - '&bOnline: &a{online}'

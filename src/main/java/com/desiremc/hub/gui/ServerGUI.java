@@ -6,7 +6,10 @@ import com.desiremc.core.gui.MenuItem;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.session.Server;
 import com.desiremc.hub.session.ServerHandler;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -20,33 +23,41 @@ public class ServerGUI extends Menu
 
     private ServerGUI()
     {
-        super(DesireHub.getLangHandler().renderMessageNoPrefix("inventory.title"), 1);
+        super(DesireHub.getLangHandler().renderMessageNoPrefix("inventory.title"), 3);
 
         reloadServers();
     }
 
     public void reloadServers()
     {
-        int i = 0;
+        Server first = ServerHandler.getServer("first");
 
-        for (Server server : ServerHandler.getServers())
+        removeMenuItem(getSlot(first));
+        addMenuItem(new MenuItem(DesireHub.getConfigHandler().getString("servers.first.item.name"), getItem(first))
         {
-            if (!Server.ServerType.HCF.equals(server.getType()))
+            @Override
+            public void onClick(Player player)
             {
-                continue;
+                ServerHandler.processPlayer(ServerHandler.getServer("first"), player);
+                reloadServers();
             }
+        }, getSlot(first));
 
-            removeMenuItem(i);
-            addMenuItem(new MenuItem(DesireHub.getConfigHandler().getString("servers." + server.getName() + ".item.name"), getItem(server))
+        Inventory inv = super.getInventory();
+
+        for (int slot = 0; slot < inv.getSize(); slot++)
+        {
+            ItemStack item = inv.getItem(slot);
+            if (item == null || item.getType().equals(Material.AIR))
             {
-                @Override
-                public void onClick(Player player)
-                {
-                    ServerHandler.processPlayer(server, player);
-                    reloadServers();
-                }
-            }, i);
-            i++;
+                ItemStack pane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);
+                ItemMeta meta = pane.getItemMeta();
+
+                meta.setDisplayName(ChatColor.RESET + "");
+
+                pane.setItemMeta(meta);
+                inv.setItem(slot, pane);
+            }
         }
     }
 
@@ -75,6 +86,11 @@ public class ServerGUI extends Menu
         item.setItemMeta(meta);
 
         return item;
+    }
+
+    private int getSlot(Server server)
+    {
+        return DesireHub.getConfigHandler().getInteger("servers." + server.getName() + ".item.slot");
     }
 
     public static void loadServers()

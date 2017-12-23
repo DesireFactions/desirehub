@@ -29,7 +29,7 @@ public class Server
     @Transient
     private LinkedList<Session> queue;
 
-    public Server(String name, int slots, int online)
+    public Server(String name, int slots, int online, int inventorySlot)
     {
         this.name = name;
         this.slots = slots;
