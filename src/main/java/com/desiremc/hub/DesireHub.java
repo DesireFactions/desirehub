@@ -1,11 +1,5 @@
 package com.desiremc.hub;
 
-import java.io.File;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.api.FileHandler;
 import com.desiremc.core.api.LangHandler;
@@ -20,6 +14,11 @@ import com.desiremc.hub.listeners.EntityListener;
 import com.desiremc.hub.listeners.InteractListener;
 import com.desiremc.hub.listeners.InventoryListener;
 import com.desiremc.hub.session.ServerHandler;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 public class DesireHub extends JavaPlugin
 {
@@ -108,7 +107,7 @@ public class DesireHub extends JavaPlugin
                     }
                 }
             }
-        }, 0, 20);
+        }, 0, 20L);
     }
 
 }

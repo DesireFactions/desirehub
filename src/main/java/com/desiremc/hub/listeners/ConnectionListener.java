@@ -68,8 +68,15 @@ public class ConnectionListener implements Listener
         pearlMeta.setDisplayName(ServerHandler.getPearl());
         pearl.setItemMeta(pearlMeta);
 
+        ItemStack shop = DesireCore.getItemHandler().get(DesireHub.getConfigHandler().getString("shop.item"), 1);
+
+        ItemMeta shopMeta = shop.getItemMeta();
+        shopMeta.setDisplayName(ServerHandler.getShop());
+        shop.setItemMeta(shopMeta);
+
         items[4] = compass;
         items[1] = pearl;
+        items[8] = shop;
         return items;
     }
 }

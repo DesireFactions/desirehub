@@ -11,7 +11,10 @@ servers:
     
 selector:
   item: compass
-  name: '&b|&a Servers &b|'
+  name: '&aServer Selector &b(Right Click)'
 pearl:
   item: stick
-  name: '&b|&a Teleporter &b|'
+  name: '&aTeleporter &b(Right Click)'
+shop:
+  item: book
+  name: '&aServer Shop &b(Right Click)'

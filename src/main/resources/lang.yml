@@ -26,3 +26,7 @@ welcome-message:
   - "&eVisit our forums @ &creddit.com/r/desiremc"
   - "&eEnjoy your stay!"
   - '&8&m----------------------------------------------------'
+shop-message:
+  - '&8&m----------------------------------------------------'
+  - "&eVisit our store @ &cstore.desirehcf.com"
+  - '&8&m----------------------------------------------------'
