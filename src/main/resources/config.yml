@@ -25,3 +25,6 @@ info:
 pvp:
   item: blaze_rod
   name: '&aEnable PvP &b(Right Click)'
+hider:
+  item: clock
+  name: '&aHide Players &b(Right Click)'

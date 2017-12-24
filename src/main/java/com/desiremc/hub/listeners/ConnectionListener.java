@@ -2,7 +2,9 @@ package com.desiremc.hub.listeners;
 
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.scoreboard.EntryRegistry;
+import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.session.SessionSetting;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.session.ServerHandler;
 import org.apache.commons.lang.StringUtils;
@@ -50,6 +52,24 @@ public class ConnectionListener implements Listener
                 }
             }
         }, 5L);
+
+        Session session = SessionHandler.getSession(p);
+
+        if (session.getSetting(SessionSetting.PLAYERS))
+        {
+            for (Player target : Bukkit.getOnlinePlayers())
+            {
+                p.hidePlayer(target);
+            }
+        }
+
+        for (Session target : SessionHandler.getOnlineSessions())
+        {
+            if (target.getSetting(SessionSetting.PLAYERS))
+            {
+                target.getPlayer().hidePlayer(p);
+            }
+        }
     }
 
     public static ItemStack[] getItems()
@@ -80,10 +100,17 @@ public class ConnectionListener implements Listener
         pvpMeta.setDisplayName(ServerHandler.getPvP());
         pvp.setItemMeta(pvpMeta);
 
+        ItemStack hider = DesireCore.getItemHandler().get(DesireHub.getConfigHandler().getString("hider.item"), 1);
+
+        ItemMeta hiderMeta = hider.getItemMeta();
+        hiderMeta.setDisplayName(ServerHandler.getHider());
+        hider.setItemMeta(hiderMeta);
+
         items[4] = compass;
         items[0] = pearl;
         items[8] = shop;
         items[2] = pvp;
+        items[6] = hider;
         return items;
     }
 }

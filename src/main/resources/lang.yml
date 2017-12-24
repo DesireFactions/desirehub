@@ -23,6 +23,9 @@ pvp:
 leave:
   valid: '&bYou have left PvP mode.'
   invalid: '&bYou are not in PvP mode.'
+hider:
+  on: '&bPlayers are now hidden.'
+  off: '&bPlayers are no longer hidden.'
 welcome-message:
   - '&8&m----------------------------------------------------'
   - '&bWelcome to DesireHCF'

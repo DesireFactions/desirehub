@@ -27,6 +27,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
     private static String pearl;
     private static String info;
     private static String pvp;
+    private static String hider;
 
     private static List<Server> servers;
 
@@ -204,6 +205,15 @@ public class ServerHandler extends BasicDAO<Server, Long>
             pvp = DesireHub.getConfigHandler().getString("pvp.name");
         }
         return pvp;
+    }
+
+    public static String getHider()
+    {
+        if (hider == null)
+        {
+            hider = DesireHub.getConfigHandler().getString("hider.name");
+        }
+        return hider;
     }
 
     public static ServerHandler getInstance()

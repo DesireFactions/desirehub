@@ -1,5 +1,8 @@
 package com.desiremc.hub.listeners;
 
+import com.desiremc.core.session.Session;
+import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.session.SessionSetting;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.gui.ServerGUI;
 import com.desiremc.hub.session.ServerHandler;
@@ -58,6 +61,20 @@ public class InteractListener implements Listener
                 pvping.add(p.getUniqueId());
                 p.setGameMode(GameMode.SURVIVAL);
                 setInventory(p);
+            }
+            else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getHider()))
+            {
+                Session session = SessionHandler.getSession(p);
+                if (session.getSetting(SessionSetting.PLAYERS))
+                {
+                    session.setSetting(SessionSetting.PLAYERS, false);
+                    DesireHub.getLangHandler().sendRenderMessage(session, "hider.off");
+                }
+                else
+                {
+                    session.setSetting(SessionSetting.PLAYERS, true);
+                    DesireHub.getLangHandler().sendRenderMessage(session, "hider.on");
+                }
             }
         }
     }
