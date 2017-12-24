@@ -3,11 +3,12 @@ package com.desiremc.hub;
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.api.FileHandler;
 import com.desiremc.core.api.LangHandler;
+import com.desiremc.core.api.newcommands.CommandHandler;
 import com.desiremc.core.listeners.ListenerManager;
 import com.desiremc.core.scoreboard.EntryRegistry;
 import com.desiremc.core.session.SessionHandler;
+import com.desiremc.hub.commands.LeaveCommand;
 import com.desiremc.hub.gui.ServerGUI;
-import com.desiremc.hub.handlers.TablistHandler;
 import com.desiremc.hub.listeners.ChatListener;
 import com.desiremc.hub.listeners.ConnectionListener;
 import com.desiremc.hub.listeners.EntityListener;
@@ -53,7 +54,8 @@ public class DesireHub extends JavaPlugin
 
     private void registerCommands()
     {
-
+        CommandHandler commandHandler = CommandHandler.getInstance();
+        commandHandler.registerCommand(new LeaveCommand());
     }
 
     private void registerListeners()
@@ -64,7 +66,6 @@ public class DesireHub extends JavaPlugin
         listeners.addListener(new InteractListener());
         listeners.addListener(new EntityListener());
         listeners.addListener(new ChatListener());
-        listeners.addListener(new TablistHandler());
     }
 
     public static FileHandler getConfigHandler()

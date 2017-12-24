@@ -52,7 +52,7 @@ public class ConnectionListener implements Listener
         }, 5L);
     }
 
-    private ItemStack[] getItems()
+    public static ItemStack[] getItems()
     {
         ItemStack[] items = new ItemStack[28];
 
@@ -68,15 +68,22 @@ public class ConnectionListener implements Listener
         pearlMeta.setDisplayName(ServerHandler.getPearl());
         pearl.setItemMeta(pearlMeta);
 
-        ItemStack shop = DesireCore.getItemHandler().get(DesireHub.getConfigHandler().getString("shop.item"), 1);
+        ItemStack shop = DesireCore.getItemHandler().get(DesireHub.getConfigHandler().getString("info.item"), 1);
 
         ItemMeta shopMeta = shop.getItemMeta();
-        shopMeta.setDisplayName(ServerHandler.getShop());
+        shopMeta.setDisplayName(ServerHandler.getInfo());
         shop.setItemMeta(shopMeta);
 
+        ItemStack pvp = DesireCore.getItemHandler().get(DesireHub.getConfigHandler().getString("pvp.item"), 1);
+
+        ItemMeta pvpMeta = pvp.getItemMeta();
+        pvpMeta.setDisplayName(ServerHandler.getPvP());
+        pvp.setItemMeta(pvpMeta);
+
         items[4] = compass;
-        items[1] = pearl;
+        items[0] = pearl;
         items[8] = shop;
+        items[2] = pvp;
         return items;
     }
 }

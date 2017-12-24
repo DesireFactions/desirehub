@@ -1,5 +1,6 @@
 package com.desiremc.hub.listeners;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryInteractEvent;
@@ -11,7 +12,18 @@ public class InventoryListener implements Listener
     @EventHandler
     public void onMove(InventoryInteractEvent e)
     {
-        e.setCancelled(true);
+        if (!(e.getWhoClicked() instanceof Player))
+        {
+            e.setCancelled(true);
+            return;
+        }
+
+        Player player = (Player) e.getWhoClicked();
+
+        if (!InteractListener.hasPvP(player))
+        {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler

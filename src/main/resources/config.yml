@@ -8,6 +8,10 @@ servers:
         - '&bOnline: &a{online}'
         - '&bSlots: &a{slots}'
         - '&bIn Queue: &a{queue}'
+        - ''
+        - '&b◆ 10 minute KOTH'
+        - '&b◆ 5 Man Factions'
+        - '&b◆ 1 Ally'
     
 selector:
   item: compass
@@ -15,6 +19,9 @@ selector:
 pearl:
   item: stick
   name: '&aTeleporter &b(Right Click)'
-shop:
+info:
   item: book
-  name: '&aServer Shop &b(Right Click)'
+  name: '&aServer Info &b(Right Click)'
+pvp:
+  item: blaze_rod
+  name: '&aEnable PvP &b(Right Click)'

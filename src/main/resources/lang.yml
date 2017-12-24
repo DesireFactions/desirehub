@@ -1,6 +1,3 @@
-prefix:
-  use: true
-  text: "&d[&bDesire&d]"
 inventory:
   title: "&c&lServers"
 chat:
@@ -12,21 +9,31 @@ redirect:
 scoreboard:
   players:
     enabled: true
-    message:  "&9Players: "
+    message:  "&9Players: &f"
   rank:
     enabled: true
-    message:  "&9Rank: "
+    message:  "&9Rank: &f"
   server:
     enabled: true
-    message:  "&9Server: "
+    message:  "&9Server: &f"
+pvp:
+  first: '&bRight click again to enable PvP'
+  final: '&bYou have now enabled PvP. Good luck!'
+  set_kit: '&bYou have set the PvP kit to your inventory.'
+leave:
+  valid: '&bYou have left PvP mode.'
+  invalid: '&bYou are not in PvP mode.'
 welcome-message:
   - '&8&m----------------------------------------------------'
-  - "&eWelcome to DesireHCF"
-  - "&eVisit our store @ &cstore.desirehcf.com"
-  - "&eVisit our forums @ &creddit.com/r/desiremc"
-  - "&eEnjoy your stay!"
+  - '&bWelcome to DesireHCF'
+  - '&bVisit our Store @ &7store.desirehcf.com'
+  - '&bVisit our Forums @ &7reddit.com/r/desiremc'
+  - '&bEnjoy your stay!'
   - '&8&m----------------------------------------------------'
-shop-message:
+info-message:
   - '&8&m----------------------------------------------------'
-  - "&eVisit our store @ &cstore.desirehcf.com"
+  - '&bVisit our Store @ &7store.desirehcf.com'
+  - '&bVisit our Forums @ &7reddit.com/r/desiremc'
+  - '&bJoin us on Teamspeak @ &7ts.desirehcf.com'
+  - '&bJoin us on Discord @ &7https://discord.gg/n7f3rUd'
   - '&8&m----------------------------------------------------'
