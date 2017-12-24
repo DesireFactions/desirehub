@@ -16,16 +16,13 @@ scoreboard:
   server:
     enabled: true
     message:  "&9Server: &f"
+players_off: '&bPlayers are no longer hidden.'
+players_on: '&bPlayers are now hidden.'
 pvp:
-  first: '&bRight click again to enable PvP'
-  final: '&bYou have now enabled PvP. Good luck!'
-  set_kit: '&bYou have set the PvP kit to your inventory.'
+  enabled: '&bYou have enabled PvP. Good luck!'
 leave:
   valid: '&bYou have left PvP mode.'
   invalid: '&bYou are not in PvP mode.'
-hider:
-  on: '&bPlayers are now hidden.'
-  off: '&bPlayers are no longer hidden.'
 welcome-message:
   - '&8&m----------------------------------------------------'
   - '&bWelcome to DesireHCF'
