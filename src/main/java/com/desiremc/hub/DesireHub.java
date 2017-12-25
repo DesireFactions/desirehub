@@ -43,8 +43,8 @@ public class DesireHub extends JavaPlugin
         registerCommands();
         registerListeners();
 
-        ServerHandler.initialize();
         ServerGUI.loadServers();
+        ServerHandler.initialize();
         DesireCore.getInstance().getMongoWrapper().getDatastore().ensureIndexes();
 
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
