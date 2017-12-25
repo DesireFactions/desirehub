@@ -8,6 +8,7 @@ import com.desiremc.core.listeners.ListenerManager;
 import com.desiremc.core.scoreboard.EntryRegistry;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.hub.commands.LeaveCommand;
+import com.desiremc.hub.gui.ServerGUI;
 import com.desiremc.hub.listeners.ChatListener;
 import com.desiremc.hub.listeners.ConnectionListener;
 import com.desiremc.hub.listeners.EntityListener;
@@ -42,6 +43,7 @@ public class DesireHub extends JavaPlugin
         registerCommands();
         registerListeners();
 
+        ServerGUI.loadServers();
         ServerHandler.initialize();
         DesireCore.getInstance().getMongoWrapper().getDatastore().ensureIndexes();
 
