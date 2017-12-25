@@ -8,7 +8,6 @@ import com.desiremc.core.listeners.ListenerManager;
 import com.desiremc.core.scoreboard.EntryRegistry;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.hub.commands.LeaveCommand;
-import com.desiremc.hub.gui.ServerGUI;
 import com.desiremc.hub.listeners.ChatListener;
 import com.desiremc.hub.listeners.ConnectionListener;
 import com.desiremc.hub.listeners.EntityListener;
@@ -43,7 +42,6 @@ public class DesireHub extends JavaPlugin
         registerCommands();
         registerListeners();
 
-        ServerGUI.loadServers();
         ServerHandler.initialize();
         DesireCore.getInstance().getMongoWrapper().getDatastore().ensureIndexes();
 
@@ -94,17 +92,17 @@ public class DesireHub extends JavaPlugin
                 {
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.players.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.players.message", false, false), ServerHandler.getAllPlayers() + "");
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.players.message", false), ServerHandler.getAllPlayers() + "");
                     }
 
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.rank.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.rank.message", false, false), SessionHandler.getOnlineSession(player.getUniqueId()).getRank().getDisplayName());
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.rank.message", false), SessionHandler.getOnlineSession(player.getUniqueId()).getRank().getDisplayName());
                     }
 
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.server.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false, false), DesireCore.getCurrentServer());
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false), DesireCore.getCurrentServer());
                     }
                 }
             }
