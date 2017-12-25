@@ -25,6 +25,7 @@ public class ServerGUI extends Menu
     {
         super(DesireHub.getLangHandler().renderMessage("inventory.title", false, false), 3);
 
+        instance = this;
         reloadServers();
     }
 
