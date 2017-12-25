@@ -23,7 +23,7 @@ public class ServerGUI extends Menu
 
     private ServerGUI()
     {
-        super(DesireHub.getLangHandler().renderMessageNoPrefix("inventory.title"), 3);
+        super(DesireHub.getLangHandler().renderMessage("inventory.title", false, false), 3);
 
         reloadServers();
     }

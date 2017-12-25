@@ -12,7 +12,7 @@ public class SenderInPVPMode implements SenderValidator
     {
         if (!InteractListener.hasPvP(sender.getPlayer()))
         {
-            DesireHub.getLangHandler().sendRenderMessage(sender, "leave.invalid");
+            DesireHub.getLangHandler().sendRenderMessage(sender, "leave.invalid", true, false);
             return false;
         }
         return true;

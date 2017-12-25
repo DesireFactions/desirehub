@@ -33,22 +33,22 @@ public class ConnectionListener implements Listener
             {
                 if (DesireHub.getLangHandler().getBoolean("scoreboard.players.enabled"))
                 {
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.players.message"), ServerHandler.getAllPlayers() + "");
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.players.message", false, false), ServerHandler.getAllPlayers() + "");
                 }
 
                 if (DesireHub.getLangHandler().getBoolean("scoreboard.rank.enabled"))
                 {
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.rank.message"), StringUtils.capitalize(SessionHandler.getOnlineSession(p.getUniqueId()).getRank().name().toLowerCase()));
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.rank.message", false, false), StringUtils.capitalize(SessionHandler.getOnlineSession(p.getUniqueId()).getRank().name().toLowerCase()));
                 }
 
                 if (DesireHub.getLangHandler().getBoolean("scoreboard.server.enabled"))
                 {
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessageNoPrefix("scoreboard.server.message"), DesireCore.getCurrentServer());
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false, false), DesireCore.getCurrentServer());
                 }
 
                 for (String message : DesireHub.getLangHandler().getStringList("welcome-message"))
                 {
-                    DesireHub.getLangHandler().sendRenderMessageCenteredNoPrefix(p, message);
+                    DesireHub.getLangHandler().sendRenderMessage(p, message, false, true);
                 }
             }
         }, 5L);

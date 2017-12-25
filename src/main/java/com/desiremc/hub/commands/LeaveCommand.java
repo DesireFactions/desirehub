@@ -22,7 +22,7 @@ public class LeaveCommand extends ValidCommand
     @Override
     public void validRun(Session sender, String label[], List<CommandArgument<?>> args)
     {
-        DesireHub.getLangHandler().sendRenderMessage(sender, "leave.valid");
+        DesireHub.getLangHandler().sendRenderMessage(sender, "leave.valid", true, false);
         InteractListener.removePvP(sender.getPlayer());
     }
 }

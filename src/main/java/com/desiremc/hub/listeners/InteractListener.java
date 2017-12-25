@@ -53,7 +53,7 @@ public class InteractListener implements Listener
             {
                 for (String message : DesireHub.getLangHandler().getStringList("info-message"))
                 {
-                    DesireHub.getLangHandler().sendRenderMessageCenteredNoPrefix(e.getPlayer(), message);
+                    DesireHub.getLangHandler().sendRenderMessage(e.getPlayer(), message, false, true);
                 }
             }
             else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getPvP()))
@@ -61,7 +61,7 @@ public class InteractListener implements Listener
                 pvping.add(p.getUniqueId());
                 p.setGameMode(GameMode.SURVIVAL);
                 setInventory(p);
-                DesireHub.getLangHandler().sendRenderMessage(p, "pvp.enabled");
+                DesireHub.getLangHandler().sendRenderMessage(p, "pvp.enabled", true, false);
             }
             else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getHider()))
             {
@@ -69,12 +69,12 @@ public class InteractListener implements Listener
                 if (session.getSetting(SessionSetting.PLAYERS))
                 {
                     session.setSetting(SessionSetting.PLAYERS, false);
-                    DesireHub.getLangHandler().sendRenderMessage(p, "players_off");
+                    DesireHub.getLangHandler().sendRenderMessage(p, "players_off", true, false);
                 }
                 else
                 {
                     session.setSetting(SessionSetting.PLAYERS, true);
-                    DesireHub.getLangHandler().sendRenderMessage(p, "players_on");
+                    DesireHub.getLangHandler().sendRenderMessage(p, "players_on", true, false);
                 }
             }
         }

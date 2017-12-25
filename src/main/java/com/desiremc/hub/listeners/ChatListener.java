@@ -1,13 +1,5 @@
 package com.desiremc.hub.listeners;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.fanciful.FancyMessage;
 import com.desiremc.core.session.Rank;
@@ -15,6 +7,13 @@ import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.core.utils.ChatUtils;
 import com.desiremc.hub.DesireHub;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener
 {
@@ -43,7 +42,7 @@ public class ChatListener implements Listener
         }
         if (!s.getRank().isStaff())
         {
-            DesireHub.getLangHandler().sendString(player, "chat.deny");
+            DesireHub.getLangHandler().sendRenderMessage(player, "chat.deny", true, false);
             return;
         }
 

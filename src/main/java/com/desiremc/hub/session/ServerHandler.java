@@ -71,7 +71,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
         DeathBan ban = DeathBanHandler.getDeathBan(s, server.getName());
         if (ban != null)
         {
-            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
+            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", true, false, "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
             return;
         }
 
@@ -103,7 +103,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
         }
         else
         {
-            DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
+            DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
         }
     }
 
