@@ -25,6 +25,7 @@ public class ServerGUI extends Menu
     {
         super(DesireHub.getLangHandler().renderMessage("inventory.title", false), 3);
 
+        instance = this;
         reloadServers();
     }
 
@@ -91,11 +92,6 @@ public class ServerGUI extends Menu
     private int getSlot(Server server)
     {
         return DesireHub.getConfigHandler().getInteger("servers." + server.getName() + ".item.slot");
-    }
-
-    public static void loadServers()
-    {
-        instance = new ServerGUI();
     }
 
     public static ServerGUI getInstance()
