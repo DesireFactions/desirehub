@@ -94,17 +94,17 @@ public class DesireHub extends JavaPlugin
                 {
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.players.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.players.message", false), ServerHandler.getAllPlayers() + "");
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.players.message", false, false), ServerHandler.getAllPlayers() + "");
                     }
 
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.rank.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.rank.message", false), SessionHandler.getOnlineSession(player.getUniqueId()).getRank().getDisplayName());
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.rank.message", false, false), SessionHandler.getOnlineSession(player.getUniqueId()).getRank().getDisplayName());
                     }
 
                     if (DesireHub.getLangHandler().getBoolean("scoreboard.server.enabled"))
                     {
-                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false), DesireCore.getCurrentServer());
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false, false), DesireCore.getCurrentServer());
                     }
                 }
             }

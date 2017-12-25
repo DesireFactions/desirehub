@@ -33,17 +33,17 @@ public class ConnectionListener implements Listener
             {
                 if (DesireHub.getLangHandler().getBoolean("scoreboard.players.enabled"))
                 {
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.players.message", false), ServerHandler.getAllPlayers() + "");
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.players.message", false, false), ServerHandler.getAllPlayers() + "");
                 }
 
                 if (DesireHub.getLangHandler().getBoolean("scoreboard.rank.enabled"))
                 {
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.rank.message", false), StringUtils.capitalize(SessionHandler.getOnlineSession(p.getUniqueId()).getRank().name().toLowerCase()));
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.rank.message", false, false), StringUtils.capitalize(SessionHandler.getOnlineSession(p.getUniqueId()).getRank().name().toLowerCase()));
                 }
 
                 if (DesireHub.getLangHandler().getBoolean("scoreboard.server.enabled"))
                 {
-                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false), DesireCore.getCurrentServer());
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false, false), DesireCore.getCurrentServer());
                 }
 
                 for (String message : DesireHub.getLangHandler().getStringList("welcome-message"))
