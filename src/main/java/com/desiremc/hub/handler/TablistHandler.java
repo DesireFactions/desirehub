@@ -12,10 +12,31 @@ import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.core.tablist.TabAPI;
 import com.desiremc.core.tablist.TabList;
+import com.desiremc.core.utils.StringUtils;
+import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.session.ServerHandler;
 
 public class TablistHandler implements Listener
 {
+
+    public TablistHandler()
+    {
+        Bukkit.getScheduler().runTaskTimer(DesireHub.getInstance(), new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                for (Player p : Bukkit.getOnlinePlayers())
+                {
+                    TabList tabList = TabAPI.getPlayerTabList(p);
+
+                    tabList.setSlot(1, 1, "§bOnline: " + ServerHandler.getAllPlayers());
+                    tabList.setSlot(11, 0, "§fOnline: " + ServerHandler.getServer("first").getOnline());
+                }
+            }
+        }, 0, 20);
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event)
     {
@@ -28,24 +49,34 @@ public class TablistHandler implements Listener
                 tabList = TabAPI.createTabListForPlayer(joiner);
 
                 tabList.setSlot(0, 1, "§3§lDesireHCF");
-                tabList.setSlot(1, 1, "§bOnline" + ServerHandler.getAllPlayers());
+                tabList.setSlot(1, 1, "§fOnline: " + ServerHandler.getAllPlayers());
 
                 tabList.setSlot(3, 0, "§b§lStore");
-                tabList.setSlot(4, 0, "§bstore.desirehcf.com");
+                tabList.setSlot(4, 0, "§fbit.ly/2l3mL7t");
 
-                tabList.setSlot(6, 0, "§b§lTeamSpeak");
-                tabList.setSlot(7, 0, "§bts.desirehcf.com");
+                tabList.setSlot(3, 2, "§b§lTeamSpeak");
+                tabList.setSlot(4, 2, "§fbit.ly/2C9zhMp");
 
-                tabList.setSlot(9, 0, "§b§lReddit");
-                tabList.setSlot(10, 0, "§breddit.com/r/desiremc");
+                tabList.setSlot(6, 0, "§b§lReddit");
+                tabList.setSlot(7, 0, "§fbit.ly/2pCsi9P");
 
-                tabList.setSlot(12, 0, "§b§lDiscord");
-                tabList.setSlot(13, 0, "§bdiscord.desirehcf.com");
+                tabList.setSlot(6, 2, "§b§lDiscord");
+                tabList.setSlot(7, 2, "§fbit.ly/2DRhlEp");
+
+                tabList.setSlot(9, 1, "§b§lServer Info");
+
+                tabList.setSlot(10, 0, "§b§lAlpha");
+                tabList.setSlot(11, 0, "§fOnline: " + ServerHandler.getServer("first").getOnline());
+
+                tabList.setSlot(13, 1, "§b§lPlayer Info");
+                tabList.setSlot(14, 0, "§bRank:");
+                tabList.setSlot(15, 0, "§f" + StringUtils.capitalize(session.getRank().name().toLowerCase()));
             }
             else
             {
                 tabList = TabAPI.getPlayerTabList(session.getPlayer());
-                tabList.setSlot(6, 2, "§7" + Bukkit.getOnlinePlayers().size());
+                tabList.setSlot(1, 1, "§fOnline: " + ServerHandler.getAllPlayers());
+                tabList.setSlot(11, 0, "§fOnline: " + ServerHandler.getServer("first").getOnline());
             }
         }
 
@@ -66,7 +97,8 @@ public class TablistHandler implements Listener
             else
             {
                 tabList = TabAPI.getPlayerTabList(session.getPlayer());
-                tabList.setSlot(6, 2, "§7" + Bukkit.getOnlinePlayers().size());
+                tabList.setSlot(1, 1, "§bOnline: " + ServerHandler.getAllPlayers());
+                tabList.setSlot(11, 0, "§fOnline: " + ServerHandler.getServer("first").getOnline());
             }
         }
         TabAPI.removePlayer(event.getPlayer());
