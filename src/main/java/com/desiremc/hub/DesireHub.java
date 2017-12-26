@@ -1,5 +1,11 @@
 package com.desiremc.hub;
 
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.api.FileHandler;
 import com.desiremc.core.api.LangHandler;
@@ -9,17 +15,13 @@ import com.desiremc.core.scoreboard.EntryRegistry;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.hub.commands.LeaveCommand;
 import com.desiremc.hub.gui.ServerGUI;
+import com.desiremc.hub.handler.TablistHandler;
 import com.desiremc.hub.listeners.ChatListener;
 import com.desiremc.hub.listeners.ConnectionListener;
 import com.desiremc.hub.listeners.EntityListener;
 import com.desiremc.hub.listeners.InteractListener;
 import com.desiremc.hub.listeners.InventoryListener;
 import com.desiremc.hub.session.ServerHandler;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 
 public class DesireHub extends JavaPlugin
 {
@@ -66,6 +68,8 @@ public class DesireHub extends JavaPlugin
         listeners.addListener(new InteractListener());
         listeners.addListener(new EntityListener());
         listeners.addListener(new ChatListener());
+
+        listeners.addListener(new TablistHandler());
     }
 
     public static FileHandler getConfigHandler()
