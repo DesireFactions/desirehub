@@ -101,6 +101,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             {
                 server.addToQueue(s);
             }
+            player.closeInventory();
         }
         else
         {
