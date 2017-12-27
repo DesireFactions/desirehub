@@ -36,10 +36,6 @@ public class InteractListener implements Listener
     public void onClick(PlayerInteractEvent e)
     {
         Player p = e.getPlayer();
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
-        {
-            e.setCancelled(true);
-        }
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
             if (!e.hasItem() || !e.getItem().hasItemMeta() || !e.getItem().getItemMeta().hasDisplayName())
@@ -89,6 +85,14 @@ public class InteractListener implements Listener
                 {
                     session.setSetting(SessionSetting.PLAYERS, true);
                     DesireHub.getLangHandler().sendRenderMessage(p, "players_on", true, false);
+                }
+            }
+
+            if (e.getClickedBlock() != null && !e.getClickedBlock().getType().equals(Material.AIR))
+            {
+                if (e.getClickedBlock().getType() == Material.CHEST)
+                {
+                    e.setCancelled(true);
                 }
             }
         }
