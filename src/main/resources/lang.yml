@@ -1,7 +1,7 @@
 inventory:
   title: "&c&lServers"
 chat:
-  deny: "You can't talk in the spawn."
+  deny: "&7You can't talk in the spawn."
 queue:
   location: '&7You are now in queue position &b#{position}&7 for &b{server}&7.'
 redirect:
@@ -19,10 +19,10 @@ scoreboard:
 players_off: '&bPlayers are no longer hidden.'
 players_on: '&bPlayers are now hidden.'
 pvp:
-  enabled: '&7You have enabled &bPvP. Do /leave to quit.'
+  enabled: '&7You have enabled PvP. Do /leave to quit.'
 leave:
-  valid: '&bYou have left PvP mode.'
-  invalid: '&bYou are not in PvP mode.'
+  valid: '&7You have left PvP mode.'
+  invalid: '&7You are not in PvP mode.'
 welcome-message:
   - '&8&m----------------------------------------------------'
   - '&bWelcome to DesireHCF'
