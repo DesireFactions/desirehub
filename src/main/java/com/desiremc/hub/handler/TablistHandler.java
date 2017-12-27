@@ -100,7 +100,7 @@ public class TablistHandler implements Listener
             {
                 tabList = TabAPI.getPlayerTabList(session.getPlayer());
                 tabList.setSlot(1, 1, "§bOnline: " + ServerHandler.getAllPlayers());
-                tabList.setSlot(13, 0, "§fOnline: " + ServerHandler.getServer("first").getOnline());
+                tabList.setSlot(11, 0, "§fOnline: " + ServerHandler.getServer("first").getOnline());
             }
         }
         TabAPI.removePlayer(event.getPlayer());
