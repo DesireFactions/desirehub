@@ -102,9 +102,9 @@ public class ServerHandler extends BasicDAO<Server, Long>
             {
                 server.addToQueue(s);
             }
-            player.closeInventory();
         }
         DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
+        player.closeInventory();
     }
 
     public static void sendToServer(Server server, Player player)
