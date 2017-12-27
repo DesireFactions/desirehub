@@ -5,7 +5,7 @@ chat:
 queue:
   location: '&7You are now in queue position &b#{position}&7 for &b{server}&7.'
 redirect:
-  deathban: "&cYour deathban on &b{server}&c ends in &e{time}&c."
+  deathban: "&7Your deathban on &b{server}&7 ends in &b{time}&7."
 scoreboard:
   players:
     enabled: true
@@ -16,8 +16,8 @@ scoreboard:
   server:
     enabled: true
     message:  "&9Server: &f"
-players_off: '&bPlayers are no longer hidden.'
-players_on: '&bPlayers are now hidden.'
+players_off: '&7Players are no longer hidden.'
+players_on: '&7Players are now hidden.'
 pvp:
   enabled: '&7You have enabled PvP. Do /leave to quit.'
 leave:

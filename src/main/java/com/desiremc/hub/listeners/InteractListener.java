@@ -132,5 +132,7 @@ public class InteractListener implements Listener
 
         player.updateInventory();
         pvping.remove(player.getUniqueId());
+
+        player.setHealth(20);
     }
 }
