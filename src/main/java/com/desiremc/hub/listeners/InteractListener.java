@@ -36,9 +36,12 @@ public class InteractListener implements Listener
     public void onClick(PlayerInteractEvent e)
     {
         Player p = e.getPlayer();
-        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
             e.setCancelled(true);
+        }
+        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+        {
             if (!e.hasItem() || !e.getItem().hasItemMeta() || !e.getItem().getItemMeta().hasDisplayName())
             {
                 return;
