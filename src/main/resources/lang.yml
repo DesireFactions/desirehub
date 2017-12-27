@@ -19,7 +19,7 @@ scoreboard:
 players_off: '&bPlayers are no longer hidden.'
 players_on: '&bPlayers are now hidden.'
 pvp:
-  enabled: '&bYou have enabled PvP. Good luck!'
+  enabled: '&7You have enabled &bPvP. Do /leave to quit.'
 leave:
   valid: '&bYou have left PvP mode.'
   invalid: '&bYou are not in PvP mode.'

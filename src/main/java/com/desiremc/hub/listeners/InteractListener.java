@@ -1,11 +1,10 @@
 package com.desiremc.hub.listeners;
 
-import com.desiremc.core.session.Session;
-import com.desiremc.core.session.SessionHandler;
-import com.desiremc.core.session.SessionSetting;
-import com.desiremc.hub.DesireHub;
-import com.desiremc.hub.gui.ServerGUI;
-import com.desiremc.hub.session.ServerHandler;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.EnderPearl;
@@ -16,9 +15,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import com.desiremc.core.session.Session;
+import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.session.SessionSetting;
+import com.desiremc.hub.DesireHub;
+import com.desiremc.hub.gui.ServerGUI;
+import com.desiremc.hub.session.ServerHandler;
 
 public class InteractListener implements Listener
 {
@@ -62,6 +64,14 @@ public class InteractListener implements Listener
                 p.setGameMode(GameMode.SURVIVAL);
                 setInventory(p);
                 DesireHub.getLangHandler().sendRenderMessage(p, "pvp.enabled", true, false);
+                for (Player target : Bukkit.getOnlinePlayers())
+                {
+                    if (hasPvP(target))
+                    {
+                        p.showPlayer(target);
+                        target.showPlayer(p);
+                    }
+                }
             }
             else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getHider()))
             {
@@ -78,6 +88,7 @@ public class InteractListener implements Listener
                 }
             }
         }
+        e.setCancelled(true);
     }
 
     public static boolean hasPvP(Player player)
