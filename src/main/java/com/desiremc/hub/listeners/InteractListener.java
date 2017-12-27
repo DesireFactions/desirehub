@@ -45,7 +45,10 @@ public class InteractListener implements Listener
 
             if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getServerSelector()))
             {
-                ServerGUI.getInstance().openMenu(e.getPlayer());
+                if (!ServerGUI.getInstance().hasMenu(p))
+                {
+                    ServerGUI.getInstance().openMenu(p);
+                }
             }
             else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getPearl()))
             {
@@ -55,7 +58,7 @@ public class InteractListener implements Listener
             {
                 for (String message : DesireHub.getLangHandler().getStringList("info-message"))
                 {
-                    DesireHub.getLangHandler().sendRenderMessage(e.getPlayer(), message, false, true);
+                    DesireHub.getLangHandler().sendRenderMessage(p, message, false, true);
                 }
             }
             else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getPvP()))
