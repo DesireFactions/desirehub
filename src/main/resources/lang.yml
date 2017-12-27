@@ -3,7 +3,7 @@ inventory:
 chat:
   deny: "You can't talk in the spawn."
 queue:
-  location: "&bYour spot in line for &a{server} &bis &c{position}&b."
+  location: '&7You are now in queue position &b#{position}&7 for &b{server}&7.'
 redirect:
   deathban: "&cYour deathban on &b{server}&c ends in &e{time}&c."
 scoreboard:
