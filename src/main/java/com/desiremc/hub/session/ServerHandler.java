@@ -76,7 +76,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             return;
         }
 
-        if (server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER && server.getStatus())
+        if ((server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER) && server.getStatus())
         {
             sendToServer(server, player);
             clearQueues(s);
