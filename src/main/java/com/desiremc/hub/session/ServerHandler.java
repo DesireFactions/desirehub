@@ -80,6 +80,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
         {
             sendToServer(server, player);
             clearQueues(s);
+            return;
         }
         else if (!server.getQueue().contains(s))
         {
@@ -103,10 +104,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             }
             player.closeInventory();
         }
-        else
-        {
-            DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
-        }
+        DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
     }
 
     public static void sendToServer(Server server, Player player)
