@@ -38,6 +38,7 @@ public class InteractListener implements Listener
         Player p = e.getPlayer();
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
+            e.setCancelled(true);
             if (!e.hasItem() || !e.getItem().hasItemMeta() || !e.getItem().getItemMeta().hasDisplayName())
             {
                 return;
@@ -88,7 +89,6 @@ public class InteractListener implements Listener
                 }
             }
         }
-        e.setCancelled(true);
     }
 
     public static boolean hasPvP(Player player)
