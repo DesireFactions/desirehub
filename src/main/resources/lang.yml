@@ -1,11 +1,39 @@
-prefix:
-  use: true
-  text: "&d[&b&lDesire&d]"
 inventory:
-  title: "&3&lServers"
+  title: "&c&lServers"
 chat:
-  deny: "You can't talk in the spawn."
+  deny: "&7You can't talk in the spawn."
 queue:
-  location: "&bYour spot in line for &a{server} &bis &c{position}&b."
+  location: '&7You are now in queue position &b#{position}&7 for &b{server}&7.'
 redirect:
-  deathban: "&cYour deathban on &b{server}&c ends in &e{time}&c."
+  deathban: "&7Your deathban on &b{server}&7 ends in &b{time}&7."
+scoreboard:
+  players:
+    enabled: true
+    message:  "&9Players: &f"
+  rank:
+    enabled: true
+    message:  "&9Rank: &f"
+  server:
+    enabled: true
+    message:  "&9Server: &f"
+players_off: '&7Players are no longer hidden.'
+players_on: '&7Players are now hidden.'
+pvp:
+  enabled: '&7You have enabled PvP. Do /leave to quit.'
+leave:
+  valid: '&7You have left PvP mode.'
+  invalid: '&7You are not in PvP mode.'
+welcome-message:
+  - '&8&m----------------------------------------------------'
+  - '&bWelcome to DesireHCF'
+  - '&bVisit our Store @ &7store.desirehcf.com'
+  - '&bVisit our Forums @ &7reddit.com/r/desiremc'
+  - '&bEnjoy your stay!'
+  - '&8&m----------------------------------------------------'
+info-message:
+  - '&8&m----------------------------------------------------'
+  - '&bVisit our Store @ &7store.desirehcf.com'
+  - '&bVisit our Forums @ &7reddit.com/r/desiremc'
+  - '&bJoin us on Teamspeak @ &7ts.desirehcf.com'
+  - '&bJoin us on Discord @ &7https://discord.gg/n7f3rUd'
+  - '&8&m----------------------------------------------------'

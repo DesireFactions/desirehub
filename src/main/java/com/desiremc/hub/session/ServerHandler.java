@@ -9,8 +9,7 @@ import org.mongodb.morphia.dao.BasicDAO;
 
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.session.DeathBan;
-import com.desiremc.core.session.HCFSession;
-import com.desiremc.core.session.HCFSessionHandler;
+import com.desiremc.core.session.DeathBanHandler;
 import com.desiremc.core.session.Rank;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
@@ -26,6 +25,10 @@ public class ServerHandler extends BasicDAO<Server, Long>
     private static ServerHandler instance;
 
     private static String serverSelector;
+    private static String pearl;
+    private static String info;
+    private static String pvp;
+    private static String hider;
 
     private static List<Server> servers;
 
@@ -45,7 +48,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
                 update();
                 ServerGUI.getInstance().reloadServers();
             }
-        }, 0, 100);
+        }, 20, 100);
     }
 
     public static void update()
@@ -66,18 +69,18 @@ public class ServerHandler extends BasicDAO<Server, Long>
     public static void processPlayer(Server server, Player player)
     {
         Session s = SessionHandler.getSession(player);
-        HCFSession hs = HCFSessionHandler.initializeHCFSession(player.getUniqueId(), false);
-        DeathBan ban = hs.getActiveDeathBan(server.getName());
-        if (hs.hasDeathBan(server.getName()))
+        DeathBan ban = DeathBanHandler.getDeathBan(s, server.getName());
+        if (ban != null)
         {
-            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
+            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", true, false, "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
             return;
         }
-        
-        if (server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER)
+
+        if ((server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER) && server.getStatus())
         {
             sendToServer(server, player);
             clearQueues(s);
+            return;
         }
         else if (!server.getQueue().contains(s))
         {
@@ -100,10 +103,8 @@ public class ServerHandler extends BasicDAO<Server, Long>
                 server.addToQueue(s);
             }
         }
-        else
-        {
-            DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
-        }
+        DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
+        player.closeInventory();
     }
 
     public static void sendToServer(Server server, Player player)
@@ -154,6 +155,17 @@ public class ServerHandler extends BasicDAO<Server, Long>
         return servers;
     }
 
+    public static int getAllPlayers()
+    {
+        int count = 0;
+
+        for (Server server : getServers())
+        {
+            count += server.getOnline();
+        }
+        return count;
+    }
+
     public static void initialize()
     {
         instance = new ServerHandler();
@@ -166,6 +178,42 @@ public class ServerHandler extends BasicDAO<Server, Long>
             serverSelector = DesireHub.getConfigHandler().getString("selector.name");
         }
         return serverSelector;
+    }
+
+    public static String getPearl()
+    {
+        if (pearl == null)
+        {
+            pearl = DesireHub.getConfigHandler().getString("pearl.name");
+        }
+        return pearl;
+    }
+
+    public static String getInfo()
+    {
+        if (info == null)
+        {
+            info = DesireHub.getConfigHandler().getString("info.name");
+        }
+        return info;
+    }
+
+    public static String getPvP()
+    {
+        if (pvp == null)
+        {
+            pvp = DesireHub.getConfigHandler().getString("pvp.name");
+        }
+        return pvp;
+    }
+
+    public static String getHider()
+    {
+        if (hider == null)
+        {
+            hider = DesireHub.getConfigHandler().getString("hider.name");
+        }
+        return hider;
     }
 
     public static ServerHandler getInstance()

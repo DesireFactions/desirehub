@@ -3,13 +3,19 @@ package com.desiremc.hub;
 import java.io.File;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.api.FileHandler;
 import com.desiremc.core.api.LangHandler;
+import com.desiremc.core.api.newcommands.CommandHandler;
 import com.desiremc.core.listeners.ListenerManager;
+import com.desiremc.core.scoreboard.EntryRegistry;
+import com.desiremc.core.session.SessionHandler;
+import com.desiremc.hub.commands.LeaveCommand;
 import com.desiremc.hub.gui.ServerGUI;
+import com.desiremc.hub.handler.TablistHandler;
 import com.desiremc.hub.listeners.ChatListener;
 import com.desiremc.hub.listeners.ConnectionListener;
 import com.desiremc.hub.listeners.EntityListener;
@@ -42,13 +48,16 @@ public class DesireHub extends JavaPlugin
         ServerHandler.initialize();
         ServerGUI.loadServers();
         DesireCore.getInstance().getMongoWrapper().getDatastore().ensureIndexes();
-        
+
         Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
+        loopBoards();
     }
 
     private void registerCommands()
     {
-
+        CommandHandler commandHandler = CommandHandler.getInstance();
+        commandHandler.registerCommand(new LeaveCommand());
     }
 
     private void registerListeners()
@@ -59,6 +68,8 @@ public class DesireHub extends JavaPlugin
         listeners.addListener(new InteractListener());
         listeners.addListener(new EntityListener());
         listeners.addListener(new ChatListener());
+
+        listeners.addListener(new TablistHandler());
     }
 
     public static FileHandler getConfigHandler()
@@ -74,6 +85,34 @@ public class DesireHub extends JavaPlugin
     public static DesireHub getInstance()
     {
         return instance;
+    }
+
+    private void loopBoards()
+    {
+        Bukkit.getScheduler().runTaskTimer(this, new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                for (Player player : Bukkit.getOnlinePlayers())
+                {
+                    if (DesireHub.getLangHandler().getBoolean("scoreboard.players.enabled"))
+                    {
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.players.message", false, false), ServerHandler.getAllPlayers() + "");
+                    }
+
+                    if (DesireHub.getLangHandler().getBoolean("scoreboard.rank.enabled"))
+                    {
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.rank.message", false, false), SessionHandler.getOnlineSession(player.getUniqueId()).getRank().getDisplayName());
+                    }
+
+                    if (DesireHub.getLangHandler().getBoolean("scoreboard.server.enabled"))
+                    {
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false, false), DesireCore.getCurrentServer());
+                    }
+                }
+            }
+        }, 0, 20L);
     }
 
 }

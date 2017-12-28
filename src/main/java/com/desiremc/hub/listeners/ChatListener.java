@@ -1,5 +1,12 @@
 package com.desiremc.hub.listeners;
 
+import com.desiremc.core.DesireCore;
+import com.desiremc.core.fanciful.FancyMessage;
+import com.desiremc.core.session.Rank;
+import com.desiremc.core.session.Session;
+import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.utils.ChatUtils;
+import com.desiremc.hub.DesireHub;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -8,18 +15,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import com.desiremc.core.DesireCore;
-import com.desiremc.core.fanciful.FancyMessage;
-import com.desiremc.core.session.Rank;
-import com.desiremc.core.session.Session;
-import com.desiremc.core.session.SessionHandler;
-import com.desiremc.core.utils.ChatUtils;
-import com.desiremc.hub.DesireHub;
-
 public class ChatListener implements Listener
 {
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void chat(AsyncPlayerChatEvent event)
     {
         if (event.isCancelled())
@@ -43,14 +42,12 @@ public class ChatListener implements Listener
         }
         if (!s.getRank().isStaff())
         {
-            DesireHub.getLangHandler().sendString(player, "chat.deny");
+            DesireHub.getLangHandler().sendRenderMessage(player, "chat.deny", true, false);
             return;
         }
 
         String msg = event.getMessage();
-
         String parsedMessage = s.getRank().getId() >= Rank.ADMIN.getId() ? ChatColor.translateAlternateColorCodes('&', msg) : msg;
-        System.out.println(player.getName() + ": " + parsedMessage);
         for (Player p : Bukkit.getOnlinePlayers())
         {
             new FancyMessage(s.getRank().getPrefix())
@@ -59,7 +56,6 @@ public class ChatListener implements Listener
                     .then(parsedMessage)
                     .color(s.getRank().getColor())
                     .send(p);
-            return;
 
         }
 

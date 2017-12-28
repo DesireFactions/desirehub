@@ -1,13 +1,30 @@
 servers:
   first:
     item:
-      type: 'grass'
+      slot: 13
+      type: 'diamond_sword'
       name: '&cHardcore Factions'
       lore:
         - '&bOnline: &a{online}'
         - '&bSlots: &a{slots}'
         - '&bIn Queue: &a{queue}'
+        - ''
+        - '&b◆ 10 minute KOTH'
+        - '&b◆ 5 Man Factions'
+        - '&b◆ 1 Ally'
     
 selector:
   item: compass
-  name: '&b|&a Servers &b|'
+  name: '&aServer Selector &b(Right Click)'
+pearl:
+  item: stick
+  name: '&aTeleporter &b(Right Click)'
+info:
+  item: book
+  name: '&aServer Info &b(Right Click)'
+pvp:
+  item: blaze_rod
+  name: '&aEnable PvP &b(Right Click)'
+hider:
+  item: clock
+  name: '&aHide Players &b(Right Click)'
