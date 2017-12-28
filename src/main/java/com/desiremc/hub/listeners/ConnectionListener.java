@@ -1,12 +1,5 @@
 package com.desiremc.hub.listeners;
 
-import com.desiremc.core.DesireCore;
-import com.desiremc.core.scoreboard.EntryRegistry;
-import com.desiremc.core.session.Session;
-import com.desiremc.core.session.SessionHandler;
-import com.desiremc.core.session.SessionSetting;
-import com.desiremc.hub.DesireHub;
-import com.desiremc.hub.session.ServerHandler;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,8 +7,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import com.desiremc.core.DesireCore;
+import com.desiremc.core.scoreboard.EntryRegistry;
+import com.desiremc.core.session.Session;
+import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.session.SessionSetting;
+import com.desiremc.hub.DesireHub;
+import com.desiremc.hub.session.Server;
+import com.desiremc.hub.session.ServerHandler;
 
 public class ConnectionListener implements Listener
 {
@@ -69,6 +72,17 @@ public class ConnectionListener implements Listener
             {
                 target.getPlayer().hidePlayer(p);
             }
+        }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event)
+    {
+        Session session = SessionHandler.getOnlineSession(event.getPlayer().getUniqueId());
+
+        for (Server server : ServerHandler.getServers())
+        {
+            server.removeFromQueue(session);
         }
     }
 
