@@ -82,11 +82,13 @@ public class InteractListener implements Listener
                 if (session.getSetting(SessionSetting.PLAYERS))
                 {
                     session.setSetting(SessionSetting.PLAYERS, false);
+                    session.save();
                     DesireHub.getLangHandler().sendRenderMessage(p, "players_off", true, false);
                 }
                 else
                 {
                     session.setSetting(SessionSetting.PLAYERS, true);
+                    session.save();
                     DesireHub.getLangHandler().sendRenderMessage(p, "players_on", true, false);
                 }
             }
