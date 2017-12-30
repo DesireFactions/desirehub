@@ -71,7 +71,7 @@ public class TablistHandler implements Listener
                 tabList.setSlot(11, 0, "§fOnline: " + ServerHandler.getServer("first").getOnline());
 
                 tabList.setSlot(13, 1, "§b§lPlayer Info");
-                tabList.setSlot(14, 0, "§bRank:");
+                tabList.setSlot(14, 0, "§b§lRank");
                 tabList.setSlot(15, 0, "§f" + StringUtils.capitalize(session.getRank().name().toLowerCase()));
             }
             else
