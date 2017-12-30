@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,7 +51,7 @@ public class InteractListener implements Listener
             }
             else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getPearl()))
             {
-                e.getPlayer().launchProjectile(EnderPearl.class);
+                //e.getPlayer().launchProjectile(EnderPearl.class);
             }
             else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getInfo()))
             {
