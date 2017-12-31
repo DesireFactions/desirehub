@@ -70,6 +70,7 @@ public class SpawnCommand extends ValidCommand
                     config.getDouble("spawn.z"),
                     config.getDouble("spawn.yaw").floatValue(),
                     config.getDouble("spawn.pitch").floatValue());
+            Bukkit.broadcastMessage(config.getString("spawn.world"));
         }
         return spawn;
     }

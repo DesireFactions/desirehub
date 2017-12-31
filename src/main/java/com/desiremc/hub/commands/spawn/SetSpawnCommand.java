@@ -2,6 +2,7 @@ package com.desiremc.hub.commands.spawn;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -35,6 +36,8 @@ public class SetSpawnCommand extends ValidCommand
         config.setString("spawn.world", loc.getWorld().getName());
 
         SpawnCommand.getInstance().setSpawn(loc);
+
+        Bukkit.broadcastMessage(loc.getWorld().getName());
 
         DesireHub.getLangHandler().sendRenderMessage(sender, "spawn.set", true, false);
     }
