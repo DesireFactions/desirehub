@@ -102,9 +102,16 @@ public class InteractListener implements Listener
                 }
             }
 
-            if (event.getItem().getType() != Material.POTION)
+            if (!hasPvP(player))
             {
                 event.setCancelled(true);
+            }
+            else
+            {
+                if (event.getClickedBlock().getType() == Material.CHEST)
+                {
+                    event.setCancelled(true);
+                }
             }
         }
     }
