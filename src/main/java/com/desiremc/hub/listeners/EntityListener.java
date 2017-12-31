@@ -1,5 +1,6 @@
 package com.desiremc.hub.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,9 +12,13 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.commands.spawn.SpawnCommand;
 
 public class EntityListener implements Listener
@@ -78,6 +83,18 @@ public class EntityListener implements Listener
         event.setCancelled(true);
     }
 
+    @EventHandler
+    public void onBucketEmpty(PlayerBucketEmptyEvent event)
+    {
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onBucketFill(PlayerBucketFillEvent event)
+    {
+        event.setCancelled(true);
+    }
+
     @EventHandler(priority = EventPriority.LOW)
     public void onQuit(PlayerQuitEvent event)
     {
@@ -88,13 +105,32 @@ public class EntityListener implements Listener
     public void onDeath(PlayerRespawnEvent event)
     {
         Player player = event.getPlayer();
-        player.teleport(SpawnCommand.getInstance().getSpawn());
         InteractListener.removePvP(event.getPlayer());
+        Bukkit.getScheduler().runTaskLater(DesireHub.getInstance(), new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                player.teleport(SpawnCommand.getInstance().getSpawn());
+            }
+        }, 5L);
     }
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event)
     {
         event.setDeathMessage(null);
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent event)
+    {
+        if (event.getTo().getY() > 0)
+        {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        player.teleport(SpawnCommand.getInstance().getSpawn());
     }
 }

@@ -92,12 +92,9 @@ public class InteractListener implements Listener
                 }
             }
 
-            if (e.getClickedBlock() != null && !e.getClickedBlock().getType().equals(Material.AIR))
+            if (e.getItem().getType() != Material.POTION)
             {
-                if (e.getClickedBlock().getType() == Material.CHEST)
-                {
-                    e.setCancelled(true);
-                }
+                e.setCancelled(true);
             }
         }
     }
