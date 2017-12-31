@@ -75,7 +75,14 @@ public class ConnectionListener implements Listener
             }
         }
 
-        p.teleport(SpawnCommand.getInstance().getSpawn());
+        Bukkit.getScheduler().runTaskLater(DesireHub.getInstance(), new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                p.teleport(SpawnCommand.getInstance().getSpawn());
+            }
+        }, 5L);
     }
 
     @EventHandler
