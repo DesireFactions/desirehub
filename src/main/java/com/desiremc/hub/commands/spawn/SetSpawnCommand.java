@@ -27,6 +27,8 @@ public class SetSpawnCommand extends ValidCommand
         Player p = sender.getPlayer();
         FileHandler config = DesireHub.getConfigHandler();
         Location loc = p.getLocation();
+        Bukkit.broadcastMessage("Name: " + p.getName());
+        Bukkit.broadcastMessage("World: " + p.getLocation().getWorld().getName());
 
         config.setDouble("spawn.x", loc.getX());
         config.setDouble("spawn.y", loc.getY());
@@ -36,8 +38,6 @@ public class SetSpawnCommand extends ValidCommand
         config.setString("spawn.world", loc.getWorld().getName());
 
         SpawnCommand.getInstance().setSpawn(loc);
-
-        Bukkit.broadcastMessage(loc.getWorld().getName());
 
         DesireHub.getLangHandler().sendRenderMessage(sender, "spawn.set", true, false);
     }
