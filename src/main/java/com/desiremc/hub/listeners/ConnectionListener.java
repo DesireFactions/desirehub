@@ -17,6 +17,7 @@ import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.core.session.SessionSetting;
 import com.desiremc.hub.DesireHub;
+import com.desiremc.hub.commands.spawn.SpawnCommand;
 import com.desiremc.hub.session.Server;
 import com.desiremc.hub.session.ServerHandler;
 
@@ -73,6 +74,8 @@ public class ConnectionListener implements Listener
                 target.getPlayer().hidePlayer(p);
             }
         }
+
+        p.teleport(SpawnCommand.getInstance().getSpawn());
     }
 
     @EventHandler
