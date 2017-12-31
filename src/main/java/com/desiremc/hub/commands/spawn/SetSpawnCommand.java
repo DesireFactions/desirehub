@@ -26,8 +26,6 @@ public class SetSpawnCommand extends ValidCommand
         Player p = sender.getPlayer();
         FileHandler config = DesireHub.getConfigHandler();
         Location loc = p.getLocation();
-        System.out.println("Name: " + p.getName());
-        System.out.println("World: " + p.getLocation().getWorld().getName());
 
         config.setDouble("spawn.x", loc.getX());
         config.setDouble("spawn.y", loc.getY());
