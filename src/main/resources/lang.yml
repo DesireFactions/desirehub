@@ -42,3 +42,5 @@ spawn:
   force: '&7You have been teleported to spawn by a staff member.'
   confirm: '&7You have teleported to spawn.'
   set: '&7You have set the spawn to your location.'
+teleport:
+  self: '&6You have teleported to &c{target}&6.'
