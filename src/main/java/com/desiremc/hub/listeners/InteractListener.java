@@ -83,6 +83,21 @@ public class InteractListener implements Listener
                     session.setSetting(SessionSetting.PLAYERS, false);
                     session.save();
                     DesireHub.getLangHandler().sendRenderMessage(player, "players_off", true, false);
+
+                    if (session.getSetting(SessionSetting.PLAYERS))
+                    {
+                        for (Player target : Bukkit.getOnlinePlayers())
+                        {
+                            player.showPlayer(target);
+                        }
+                    }
+                    else
+                    {
+                        for (Player target : Bukkit.getOnlinePlayers())
+                        {
+                            player.hidePlayer(target);
+                        }
+                    }
                 }
                 else
                 {
