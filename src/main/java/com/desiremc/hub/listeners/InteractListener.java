@@ -24,87 +24,87 @@ import com.desiremc.hub.session.ServerHandler;
 public class InteractListener implements Listener
 {
 
-    private static List<UUID> pvping;
+    private static List<UUID> inPVP;
 
     public InteractListener()
     {
-        pvping = new ArrayList<>();
+        inPVP = new ArrayList<>();
     }
 
     @EventHandler
-    public void onClick(PlayerInteractEvent e)
+    public void onClick(PlayerInteractEvent event)
     {
-        Player p = e.getPlayer();
-        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+        Player player = event.getPlayer();
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
         {
-            if (!e.hasItem() || !e.getItem().hasItemMeta() || !e.getItem().getItemMeta().hasDisplayName())
+            if (!event.hasItem() || !event.getItem().hasItemMeta() || !event.getItem().getItemMeta().hasDisplayName())
             {
                 return;
             }
 
-            if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getServerSelector()))
+            if (event.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getServerSelector()))
             {
-                if (!ServerGUI.getInstance().hasMenu(p))
+                if (!ServerGUI.getInstance().hasMenu(player))
                 {
-                    ServerGUI.getInstance().openMenu(p);
+                    ServerGUI.getInstance().openMenu(player);
                 }
             }
-            else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getPearl()))
+            else if (event.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getPearl()))
             {
-                //e.getPlayer().launchProjectile(EnderPearl.class);
+                player.setVelocity(player.getEyeLocation().getDirection().multiply(2));
             }
-            else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getInfo()))
+            else if (event.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getInfo()))
             {
                 for (String message : DesireHub.getLangHandler().getStringList("info-message"))
                 {
-                    DesireHub.getLangHandler().sendRenderMessage(p, message, false, true);
+                    DesireHub.getLangHandler().sendRenderMessage(player, message, false, true);
                 }
             }
-            else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getPvP()))
+            else if (event.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getPvP()))
             {
-                pvping.add(p.getUniqueId());
-                p.setGameMode(GameMode.SURVIVAL);
-                setInventory(p);
-                DesireHub.getLangHandler().sendRenderMessage(p, "pvp.enabled", true, false);
+                inPVP.add(player.getUniqueId());
+                player.setGameMode(GameMode.SURVIVAL);
+                setInventory(player);
+                DesireHub.getLangHandler().sendRenderMessage(player, "pvp.enabled", true, false);
                 for (Player target : Bukkit.getOnlinePlayers())
                 {
                     if (hasPvP(target))
                     {
-                        p.showPlayer(target);
-                        target.showPlayer(p);
+                        player.showPlayer(target);
+                        target.showPlayer(player);
                     }
                 }
             }
-            else if (e.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getHider()))
+            else if (event.getItem().getItemMeta().getDisplayName().equals(ServerHandler.getHider()))
             {
-                Session session = SessionHandler.getSession(p);
+                Session session = SessionHandler.getSession(player);
                 if (session.getSetting(SessionSetting.PLAYERS))
                 {
                     session.setSetting(SessionSetting.PLAYERS, false);
                     session.save();
-                    DesireHub.getLangHandler().sendRenderMessage(p, "players_off", true, false);
+                    DesireHub.getLangHandler().sendRenderMessage(player, "players_off", true, false);
                 }
                 else
                 {
                     session.setSetting(SessionSetting.PLAYERS, true);
                     session.save();
-                    DesireHub.getLangHandler().sendRenderMessage(p, "players_on", true, false);
+                    DesireHub.getLangHandler().sendRenderMessage(player, "players_on", true, false);
                 }
             }
 
-            if (e.getItem().getType() != Material.POTION)
+            if (event.getItem().getType() != Material.POTION)
             {
-                e.setCancelled(true);
+                event.setCancelled(true);
             }
         }
     }
 
     public static boolean hasPvP(Player player)
     {
-        return pvping.contains(player.getUniqueId());
+        return inPVP.contains(player.getUniqueId());
     }
 
-    public void setInventory(Player p)
+    private void setInventory(Player p)
     {
         ItemStack[] items = new ItemStack[36];
         p.getInventory().setContents(new ItemStack[p.getInventory().getContents().length]);
@@ -132,7 +132,7 @@ public class InteractListener implements Listener
         player.getInventory().setContents(ConnectionListener.getItems());
 
         player.updateInventory();
-        pvping.remove(player.getUniqueId());
+        inPVP.remove(player.getUniqueId());
 
         player.setHealth(20);
     }

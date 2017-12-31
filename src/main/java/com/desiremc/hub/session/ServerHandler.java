@@ -184,8 +184,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
     {
         if (pearl == null)
         {
-            pearl = "§6§lDISABLED";
-            //pearl = DesireHub.getConfigHandler().getString("pearl.name");
+            pearl = DesireHub.getConfigHandler().getString("pearl.name");
         }
         return pearl;
     }
