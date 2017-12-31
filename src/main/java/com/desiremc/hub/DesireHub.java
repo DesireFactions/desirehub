@@ -14,6 +14,8 @@ import com.desiremc.core.listeners.ListenerManager;
 import com.desiremc.core.scoreboard.EntryRegistry;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.hub.commands.LeaveCommand;
+import com.desiremc.hub.commands.spawn.SetSpawnCommand;
+import com.desiremc.hub.commands.spawn.SpawnCommand;
 import com.desiremc.hub.gui.ServerGUI;
 import com.desiremc.hub.handler.TablistHandler;
 import com.desiremc.hub.listeners.ChatListener;
@@ -58,6 +60,8 @@ public class DesireHub extends JavaPlugin
     {
         CommandHandler commandHandler = CommandHandler.getInstance();
         commandHandler.registerCommand(new LeaveCommand());
+        commandHandler.registerCommand(new SpawnCommand());
+        commandHandler.registerCommand(new SetSpawnCommand());
     }
 
     private void registerListeners()
