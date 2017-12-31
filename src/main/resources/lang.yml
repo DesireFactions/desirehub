@@ -37,3 +37,8 @@ info-message:
   - '&bJoin us on Teamspeak @ &7ts.desirehcf.com'
   - '&bJoin us on Discord @ &7https://discord.gg/n7f3rUd'
   - '&8&m----------------------------------------------------'
+spawn:
+  target: '&7Teleported &f{player} &7to spawn.'
+  force: '&7You have been teleported to spawn by a staff member.'
+  confirm: '&7You have teleported to spawn.'
+  set: '&7You have set the spawn to your location.'
