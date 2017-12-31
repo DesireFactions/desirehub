@@ -14,83 +14,87 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import com.desiremc.hub.commands.spawn.SpawnCommand;
+
 public class EntityListener implements Listener
 {
 
     @EventHandler
-    public void onSpawn(EntitySpawnEvent e)
+    public void onSpawn(EntitySpawnEvent event)
     {
-        if (!(e.getEntity() instanceof Player))
+        if (!(event.getEntity() instanceof Player))
         {
-            e.getEntity().remove();
+            event.getEntity().remove();
         }
     }
 
     @EventHandler
-    public void onDamage(EntityDamageEvent e)
+    public void onDamage(EntityDamageEvent event)
     {
-        if (e.getEntity() instanceof Player && !InteractListener.hasPvP((Player) e.getEntity()))
+        if (event.getEntity() instanceof Player && !InteractListener.hasPvP((Player) event.getEntity()))
         {
-            e.setCancelled(true);
+            event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onDamage(EntityDamageByEntityEvent e)
+    public void onDamage(EntityDamageByEntityEvent event)
     {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player)
+        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player)
         {
-            Player target = (Player) e.getEntity();
-            Player player = (Player) e.getDamager();
+            Player target = (Player) event.getEntity();
+            Player player = (Player) event.getDamager();
 
             if (!InteractListener.hasPvP(target) || !InteractListener.hasPvP(player))
             {
-                e.setCancelled(true);
+                event.setCancelled(true);
             }
         }
         else
         {
-            e.setCancelled(true);
+            event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onFood(FoodLevelChangeEvent e)
+    public void onFood(FoodLevelChangeEvent event)
     {
-        if (e.getFoodLevel() != 20)
+        if (event.getFoodLevel() != 20)
         {
-            e.setFoodLevel(20);
+            event.setFoodLevel(20);
         }
-        e.setCancelled(true);
+        event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent e)
+    public void onBlockBreak(BlockBreakEvent event)
     {
-        e.setCancelled(true);
+        event.setCancelled(true);
     }
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent e)
+    public void onBlockPlace(BlockPlaceEvent event)
     {
-        e.setCancelled(true);
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onQuit(PlayerQuitEvent e)
+    public void onQuit(PlayerQuitEvent event)
     {
-        InteractListener.removePvP(e.getPlayer());
+        InteractListener.removePvP(event.getPlayer());
     }
 
     @EventHandler
-    public void onDeath(PlayerRespawnEvent e)
+    public void onDeath(PlayerRespawnEvent event)
     {
-        InteractListener.removePvP(e.getPlayer());
+        Player player = event.getPlayer();
+        player.teleport(SpawnCommand.getInstance().getSpawn());
+        InteractListener.removePvP(event.getPlayer());
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent e)
+    public void onDeath(PlayerDeathEvent event)
     {
-        e.setDeathMessage(null);
+        event.setDeathMessage(null);
     }
 }
