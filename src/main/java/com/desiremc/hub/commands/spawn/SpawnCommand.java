@@ -64,7 +64,7 @@ public class SpawnCommand extends ValidCommand
         if (spawn == null)
         {
             FileHandler config = DesireHub.getConfigHandler();
-            new Location(Bukkit.getWorld(config.getString("spawn.world")),
+            spawn = new Location(Bukkit.getWorld(config.getString("spawn.world")),
                     config.getDouble("spawn.x"),
                     config.getDouble("spawn.y"),
                     config.getDouble("spawn.z"),
