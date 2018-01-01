@@ -1,13 +1,15 @@
 package com.desiremc.hub.session;
 
-import com.desiremc.core.session.Session;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
 import org.bukkit.entity.Player;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
-import java.util.LinkedList;
-import java.util.ListIterator;
+import com.desiremc.core.session.Session;
+import com.desiremc.core.session.SessionHandler;
 
 @Entity(value = "servers", noClassnameStored = true)
 public class Server
@@ -109,6 +111,21 @@ public class Server
 
     public int getQueueLocation(Session s)
     {
+        int loc = 1;
+        for (Session q : queue)
+        {
+            if (q.getUniqueId().equals(s.getUniqueId()))
+            {
+                return loc;
+            }
+            loc++;
+        }
+        return -1;
+    }
+
+    public int getQueueLocation(Player player)
+    {
+        Session s = SessionHandler.getOnlineSession(player.getUniqueId());
         int loc = 1;
         for (Session q : queue)
         {

@@ -96,6 +96,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
                     {
                         queue.add(next);
                         queue.set(s);
+                        DesireHub.getLangHandler().sendRenderMessage(next, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(next)));
                     }
                     else
                     {
@@ -118,6 +119,16 @@ public class ServerHandler extends BasicDAO<Server, Long>
         out.writeUTF("Connect");
         out.writeUTF(server.getName());
         player.sendPluginMessage(DesireHub.getInstance(), "BungeeCord", out.toByteArray());
+
+        for (Player target : Bukkit.getOnlinePlayers())
+        {
+            if (server.getQueueLocation(target) == -1)
+            {
+                continue;
+            }
+
+            DesireHub.getLangHandler().sendRenderMessage(target, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(target)));
+        }
     }
 
     private static void clearQueues(Session s)
