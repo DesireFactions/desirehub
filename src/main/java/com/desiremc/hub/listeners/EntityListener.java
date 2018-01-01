@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import com.desiremc.core.staff.StaffHandler;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.commands.spawn.SpawnCommand;
 
@@ -50,7 +51,8 @@ public class EntityListener implements Listener
             Player target = (Player) event.getEntity();
             Player player = (Player) event.getDamager();
 
-            if (!InteractListener.hasPvP(target) || !InteractListener.hasPvP(player))
+            if (!InteractListener.hasPvP(target) || !InteractListener.hasPvP(player) ||
+                    StaffHandler.getInstance().isFrozen(target) || StaffHandler.getInstance().isFrozen(player))
             {
                 event.setCancelled(true);
             }
