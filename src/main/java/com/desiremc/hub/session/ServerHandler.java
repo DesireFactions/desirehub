@@ -92,9 +92,14 @@ public class ServerHandler extends BasicDAO<Server, Long>
                 while (queue.hasNext())
                 {
                     next = queue.next();
-                    if (next.getRank().getId() < s.getRank().getId() || !queue.hasNext())
+                    if (queue.hasNext() && next.getRank().getId() < s.getRank().getId())
                     {
-                        queue.add(s);
+                        queue.add(next);
+                        queue.set(s);
+                    }
+                    else
+                    {
+                        queue.add(next);
                     }
                 }
             }
