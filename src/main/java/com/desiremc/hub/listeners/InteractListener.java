@@ -108,7 +108,7 @@ public class InteractListener implements Listener
             }
             else
             {
-                if (event.getClickedBlock().getType() == Material.CHEST)
+                if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.CHEST)
                 {
                     event.setCancelled(true);
                 }

@@ -24,6 +24,7 @@ import com.desiremc.hub.listeners.ConnectionListener;
 import com.desiremc.hub.listeners.EntityListener;
 import com.desiremc.hub.listeners.InteractListener;
 import com.desiremc.hub.listeners.InventoryListener;
+import com.desiremc.hub.listeners.WorldListener;
 import com.desiremc.hub.session.ServerHandler;
 
 public class DesireHub extends JavaPlugin
@@ -74,6 +75,7 @@ public class DesireHub extends JavaPlugin
         listeners.addListener(new InteractListener());
         listeners.addListener(new EntityListener());
         listeners.addListener(new ChatListener());
+        listeners.addListener(new WorldListener());
 
         listeners.addListener(new TablistHandler());
     }
