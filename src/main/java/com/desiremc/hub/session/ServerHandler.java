@@ -87,17 +87,15 @@ public class ServerHandler extends BasicDAO<Server, Long>
 
             if (session.getRank().isDonor() && !queue.isEmpty())
             {
-                int pos = 0;
 
-                for (Session s : queue)
+                for (int i = 0; i < queue.size(); i++)
                 {
+                    Session s = queue.get(i);
                     if (session.getRank().getId() > s.getRank().getId())
                     {
-                        queue.add(pos, session);
+                        queue.add(i, session);
 
                     }
-
-                    pos++;
                 }
 
                 if (!queue.contains(session))
