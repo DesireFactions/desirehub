@@ -1,7 +1,6 @@
 package com.desiremc.hub.session;
 
 import java.util.List;
-import java.util.ListIterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -67,48 +66,50 @@ public class ServerHandler extends BasicDAO<Server, Long>
 
     public static void processPlayer(Server server, Player player)
     {
-        Session s = SessionHandler.getSession(player);
-        DeathBan ban = DeathBanHandler.getDeathBan(s, server.getName());
+        Session session = SessionHandler.getSession(player);
+        DeathBan ban = DeathBanHandler.getDeathBan(session, server.getName());
         if (ban != null)
         {
-            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", true, false, "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + s.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
+            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", true, false, "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + session.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
             return;
         }
 
-        if ((server.getSlots() > server.getOnline() || s.getRank().canAutoLogin()) && server.getStatus())
+        if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus())
         {
             sendToServer(server, player);
-            clearQueues(s);
+            clearQueues(session);
             return;
         }
-        else if (!server.getQueue().contains(s))
+        else if (!server.getQueue().contains(session))
         {
-            clearQueues(s);
-            ListIterator<Session> queue = server.getQueue().listIterator();
-            if (s.getRank().isDonor() && queue.hasNext())
+            clearQueues(session);
+            List<Session> queue = server.getQueue();
+
+            if (session.getRank().isDonor() && !queue.isEmpty())
             {
-                Session next;
-                while (queue.hasNext())
+                int pos = 0;
+
+                for (Session s : queue)
                 {
-                    next = queue.next();
-                    if (queue.hasNext() && next.getRank().getId() < s.getRank().getId())
+                    if (session.getRank().getId() > s.getRank().getId())
                     {
-                        queue.add(next);
-                        queue.set(s);
-                        DesireHub.getLangHandler().sendRenderMessage(next, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(next)));
+                        queue.set(pos, session);
                     }
-                    else
-                    {
-                        queue.add(next);
-                    }
+
+                    pos++;
+                }
+
+                if (!queue.contains(session))
+                {
+                    server.addToQueue(session);
                 }
             }
             else
             {
-                server.addToQueue(s);
+                server.addToQueue(session);
             }
         }
-        DesireHub.getLangHandler().sendRenderMessage(s, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(s)));
+        DesireHub.getLangHandler().sendRenderMessage(session, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(session)));
         player.closeInventory();
     }
 
@@ -118,16 +119,6 @@ public class ServerHandler extends BasicDAO<Server, Long>
         out.writeUTF("Connect");
         out.writeUTF(server.getName());
         player.sendPluginMessage(DesireHub.getInstance(), "BungeeCord", out.toByteArray());
-
-        for (Player target : Bukkit.getOnlinePlayers())
-        {
-            if (server.getQueueLocation(target) == -1)
-            {
-                continue;
-            }
-
-            DesireHub.getLangHandler().sendRenderMessage(target, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(target)));
-        }
     }
 
     private static void clearQueues(Session s)
@@ -229,6 +220,18 @@ public class ServerHandler extends BasicDAO<Server, Long>
             hider = DesireHub.getConfigHandler().getString("hider.name");
         }
         return hider;
+    }
+
+    public static String getQueuePosition(Player player)
+    {
+        for (Server server : getServers())
+        {
+            if (server.getQueueLocation(player) != -1)
+            {
+                return server.getQueueLocation(player) + "";
+            }
+        }
+        return "None";
     }
 
     public static ServerHandler getInstance()

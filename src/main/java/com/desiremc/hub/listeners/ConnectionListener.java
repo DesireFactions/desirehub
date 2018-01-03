@@ -50,6 +50,11 @@ public class ConnectionListener implements Listener
                     EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false, false), DesireCore.getCurrentServer());
                 }
 
+                if (DesireHub.getLangHandler().getBoolean("scoreboard.queue.enabled"))
+                {
+                    EntryRegistry.getInstance().setValue(p, DesireHub.getLangHandler().renderMessage("scoreboard.queue.message", false, false), ServerHandler.getQueuePosition(p));
+                }
+
                 for (String message : DesireHub.getLangHandler().getStringList("welcome-message"))
                 {
                     DesireHub.getLangHandler().sendRenderMessage(p, message, false, true);

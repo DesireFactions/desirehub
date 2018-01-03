@@ -9,9 +9,9 @@ servers:
         - '&bSlots: &a{slots}'
         - '&bIn Queue: &a{queue}'
         - ''
-        - '&b◆ 10 minute KOTH'
         - '&b◆ 5 Man Factions'
         - '&b◆ 1 Ally'
+        - '&b◆ 10 minute KOTH'
     
 selector:
   item: compass
@@ -29,9 +29,9 @@ hider:
   item: clock
   name: '&aHide Players &b(Right Click)'
 spawn:
-  x: 0
-  y: 100
-  z: 0
-  yaw: 0
-  pitch: 0
+  x: 0.5445308877867822
+  y: 64.0
+  z: 0.44816142586941815
+  yaw: -136.54318237304688
+  pitch: -2.042012929916382
   world: world

@@ -16,6 +16,9 @@ scoreboard:
   server:
     enabled: true
     message:  "&9Server: &f"
+  queue:
+    enabled: true
+    message: "&9Queue: &f"
 players_off: '&7Players are no longer hidden.'
 players_on: '&7Players are now hidden.'
 pvp:

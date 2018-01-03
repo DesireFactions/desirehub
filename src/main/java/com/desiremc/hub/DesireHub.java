@@ -118,6 +118,11 @@ public class DesireHub extends JavaPlugin
                     {
                         EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.server.message", false, false), DesireCore.getCurrentServer());
                     }
+
+                    if (DesireHub.getLangHandler().getBoolean("scoreboard.queue.enabled"))
+                    {
+                        EntryRegistry.getInstance().setValue(player, DesireHub.getLangHandler().renderMessage("scoreboard.queue.message", false, false), ServerHandler.getQueuePosition(player));
+                    }
                 }
             }
         }, 0, 20L);
