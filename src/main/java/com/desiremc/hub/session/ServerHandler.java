@@ -92,6 +92,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
                 int lives = myDoc.getInteger("lives");
                 collection.updateOne(eq("uuid", session.getUniqueId()), new Document("$set", new Document("lives", lives - 1)));
                 ban.setRevived(true);
+                ban.save();
             }
             else
             {
