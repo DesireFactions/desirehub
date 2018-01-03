@@ -13,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
@@ -141,6 +143,8 @@ public class InteractListener implements Listener
 
         p.getInventory().setContents(items);
         p.updateInventory();
+
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
     }
 
     public static void removePvP(Player player)
@@ -150,6 +154,7 @@ public class InteractListener implements Listener
 
         player.updateInventory();
         inPVP.remove(player.getUniqueId());
+        player.removePotionEffect(PotionEffectType.SPEED);
 
         player.setHealth(20);
     }
