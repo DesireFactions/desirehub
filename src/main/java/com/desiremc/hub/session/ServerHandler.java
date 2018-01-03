@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.mongodb.morphia.dao.BasicDAO;
 
 import com.desiremc.core.DesireCore;
+import com.desiremc.core.punishment.PunishmentHandler;
 import com.desiremc.core.session.DeathBan;
 import com.desiremc.core.session.DeathBanHandler;
 import com.desiremc.core.session.Session;
@@ -92,8 +93,11 @@ public class ServerHandler extends BasicDAO<Server, Long>
                 int lives = myDoc.getInteger("lives");
                 collection.updateOne(eq("uuid", session.getUniqueId()), new Document("$set", new Document("lives", lives - 1)));
                 ban.setRevived(true);
+                ban.setReviver(session.getUniqueId());
+                ban.setReviveReason("Used life.");
                 ban.save();
                 session.save();
+                PunishmentHandler.getInstance().refreshPunishments(session);
             }
             else
             {
