@@ -94,7 +94,9 @@ public class ServerHandler extends BasicDAO<Server, Long>
                     if (session.getRank().getId() > s.getRank().getId())
                     {
                         queue.add(i, session);
-
+                        DesireHub.getLangHandler().sendRenderMessage(session, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(session)));
+                        player.closeInventory();
+                        return;
                     }
                 }
 
