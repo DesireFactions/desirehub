@@ -5,6 +5,7 @@ import java.util.List;
 import com.desiremc.core.api.newcommands.CommandArgument;
 import com.desiremc.core.api.newcommands.CommandArgumentBuilder;
 import com.desiremc.core.api.newcommands.ValidCommand;
+import com.desiremc.core.session.Rank;
 import com.desiremc.core.session.Session;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.parsers.ServerParser;
@@ -15,7 +16,7 @@ public class ServerWhitelistCommand extends ValidCommand
 {
     public ServerWhitelistCommand()
     {
-        super("whitelist", "Toggle whitelist on a server.", new String[] {});
+        super("whitelist", "Toggle whitelist on a server.", Rank.ADMIN, new String[] {});
 
         addArgument(CommandArgumentBuilder.createBuilder(Server.class)
                 .setName("server")
