@@ -1,6 +1,7 @@
 package com.desiremc.hub.session;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 import org.bukkit.entity.Player;
@@ -29,19 +30,19 @@ public class Server
     private boolean status;
 
     @Transient
-    private LinkedList<Session> queue;
+    private List<Session> queue;
 
     public Server(String name, int slots, int online, int inventorySlot)
     {
         this.name = name;
         this.slots = slots;
         this.online = online;
-        this.queue = new LinkedList<>();
+        this.queue = new ArrayList<>();
     }
 
     public Server()
     {
-        this.queue = new LinkedList<>();
+        this.queue = new ArrayList<>();
     }
 
     public int getId()
@@ -138,7 +139,7 @@ public class Server
         return -1;
     }
 
-    public LinkedList<Session> getQueue()
+    public List<Session> getQueue()
     {
         return queue;
     }

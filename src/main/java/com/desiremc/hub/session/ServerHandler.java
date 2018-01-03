@@ -94,6 +94,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
                     if (session.getRank().getId() > s.getRank().getId())
                     {
                         queue.set(pos, session);
+                        
                     }
 
                     pos++;
