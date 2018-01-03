@@ -75,7 +75,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             return;
         }
 
-        if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus() && !server.getWhitelisted())
+        if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus() && (!server.getWhitelisted() || session.getRank().isStaff()))
         {
             sendToServer(server, player);
             clearQueues(session);
