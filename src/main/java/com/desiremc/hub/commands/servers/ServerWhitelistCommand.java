@@ -32,6 +32,6 @@ public class ServerWhitelistCommand extends ValidCommand
         server.toggleWhitelisted();
         ServerHandler.getInstance().save(server);
 
-        DesireHub.getLangHandler().sendRenderMessage(sender, "server.whitelisted", true, false, "{server}", sender.getName(), "{status}", server.getWhitelisted());
+        DesireHub.getLangHandler().sendRenderMessage(sender, "server.whitelisted", true, false, "{server}", server.getName(), "{status}", server.getWhitelisted());
     }
 }
