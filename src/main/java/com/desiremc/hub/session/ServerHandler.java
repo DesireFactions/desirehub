@@ -1,5 +1,6 @@
 package com.desiremc.hub.session;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -74,7 +75,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             return;
         }
 
-        if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus())
+        if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus() && !server.getWhitelisted())
         {
             sendToServer(server, player);
             clearQueues(session);
@@ -160,6 +161,16 @@ public class ServerHandler extends BasicDAO<Server, Long>
     public static List<Server> getServers()
     {
         return servers;
+    }
+
+    public static List<String> getServerNames()
+    {
+        List<String> names = new ArrayList<>();
+        for (Server s : servers)
+        {
+            names.add(s.getName());
+        }
+        return names;
     }
 
     public static int getAllPlayers()

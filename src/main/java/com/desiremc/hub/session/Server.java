@@ -29,6 +29,8 @@ public class Server
 
     private boolean status;
 
+    private boolean whitelisted;
+
     @Transient
     private List<Session> queue;
 
@@ -88,6 +90,21 @@ public class Server
     public void setStatus(boolean status)
     {
         this.status = status;
+    }
+
+    public boolean getWhitelisted()
+    {
+        return whitelisted;
+    }
+
+    public void setWhitelisted(boolean whitelisted)
+    {
+        this.whitelisted = whitelisted;
+    }
+
+    public void toggleWhitelisted()
+    {
+        this.whitelisted = !whitelisted;
     }
 
     public void addToQueue(Session s)
