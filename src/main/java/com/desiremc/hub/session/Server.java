@@ -168,7 +168,7 @@ public class Server
 
     public void update()
     {
-        if (online < slots)
+        if (online < slots && !getWhitelisted())
         {
             int forward = slots - online;
             ListIterator<Session> search = queue.listIterator();
