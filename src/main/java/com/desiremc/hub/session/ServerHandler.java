@@ -74,6 +74,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             {
                 server.setOnline(search.getOnline());
                 server.setMaxCount(search.getSlots());
+                server.setWhitelisted(search.getWhitelisted());
                 server.update();
             }
         }
