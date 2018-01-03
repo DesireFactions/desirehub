@@ -10,7 +10,6 @@ import org.mongodb.morphia.dao.BasicDAO;
 import com.desiremc.core.DesireCore;
 import com.desiremc.core.session.DeathBan;
 import com.desiremc.core.session.DeathBanHandler;
-import com.desiremc.core.session.Rank;
 import com.desiremc.core.session.Session;
 import com.desiremc.core.session.SessionHandler;
 import com.desiremc.core.utils.DateUtils;
@@ -76,7 +75,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             return;
         }
 
-        if ((server.getSlots() > server.getOnline() || s.getRank().isStaff() || s.getRank() == Rank.GRANDMASTER || s.getRank() == Rank.BETA) && server.getStatus())
+        if ((server.getSlots() > server.getOnline() || s.getRank().canAutoLogin()) && server.getStatus())
         {
             sendToServer(server, player);
             clearQueues(s);
