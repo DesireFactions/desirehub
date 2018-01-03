@@ -1,8 +1,11 @@
 package com.desiremc.hub.session;
 
+import static com.mongodb.client.model.Filters.eq;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.mongodb.morphia.dao.BasicDAO;
@@ -17,6 +20,9 @@ import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.gui.ServerGUI;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 public class ServerHandler extends BasicDAO<Server, Long>
 {
@@ -31,9 +37,17 @@ public class ServerHandler extends BasicDAO<Server, Long>
 
     private static List<Server> servers;
 
+    private MongoClient mongoClient;
+    private MongoDatabase database;
+    private static MongoCollection<Document> collection;
+
     private ServerHandler()
     {
         super(Server.class, DesireCore.getInstance().getMongoWrapper().getDatastore());
+
+        mongoClient = new MongoClient();
+        database = mongoClient.getDatabase("hcf");
+        collection = database.getCollection("hcf_sessions");
 
         DesireCore.getInstance().getMongoWrapper().getMorphia().map(Server.class);
 
@@ -69,10 +83,21 @@ public class ServerHandler extends BasicDAO<Server, Long>
     {
         Session session = SessionHandler.getSession(player);
         DeathBan ban = DeathBanHandler.getDeathBan(session, server.getName());
+        Document myDoc = collection.find(eq("uuid", session.getUniqueId())).first();
+
         if (ban != null)
         {
-            DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", true, false, "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + session.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
-            return;
+            if (myDoc != null && myDoc.getInteger("lives") > 0)
+            {
+                int lives = myDoc.getInteger("lives");
+                collection.updateOne(eq("uuid", session.getUniqueId()), new Document("$set", new Document("lives", lives - 1)));
+                ban.setRevived(true);
+            }
+            else
+            {
+                DesireHub.getLangHandler().sendRenderMessage(player, "redirect.deathban", true, false, "{server}", server.getName(), "{time}", DateUtils.formatDateDiff(ban.getStartTime() + session.getRank().getDeathBanTime()).replaceAll(" ([0-9]{1,2}) (seconds|second)", ""));
+                return;
+            }
         }
 
         if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus() && (!server.getWhitelisted() || session.getRank().isStaff()))
