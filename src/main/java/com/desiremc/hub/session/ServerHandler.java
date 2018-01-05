@@ -102,26 +102,52 @@ public class ServerHandler extends BasicDAO<Server, Long>
             }
         }
 
-        if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus()
+        /*if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus()
                 && ((!server.getWhitelisted() || session.getRank().isStaff()) || (!server.getPartnerWhitelisted() || (session.getRank() == Rank.PARTNER || session.getRank() == Rank.YOUTUBER))))
         {
             sendToServer(server, player);
             clearQueues(session);
             return;
+        }*/
+
+        if (!server.getPartnerWhitelisted()) {
+            if (session.getRank() == Rank.PARTNER || session.getRank() == Rank.YOUTUBER) {
+                sendToServer(server, player);
+                clearQueues(session);
+                return;
+            }
         }
-        else if (!server.getQueue().contains(session))
+
+        if (server.getWhitelisted()) {
+            if (session.getRank().isStaff()) {
+                sendToServer(server, player);
+                clearQueues(session);
+                return;
+            }
+        }
+
+        if (server.getSlots() > server.getOnline()) {
+            if (session.getRank().canAutoLogin()) {
+                sendToServer(server, player);
+                clearQueues(session);
+            } else {
+                addToQueue(session, server);
+            }
+        }
+    }
+
+    private static void addToQueue(Session session, Server server) {
+        Player player = session.getPlayer();
+        if (!server.getQueue().contains(session))
         {
             clearQueues(session);
             List<Session> queue = server.getQueue();
 
-            if (session.getRank().isDonor() && !queue.isEmpty())
-            {
+            if (session.getRank().isDonor() && !queue.isEmpty()) {
 
-                for (int i = 0; i < queue.size(); i++)
-                {
+                for (int i = 0; i < queue.size(); i++) {
                     Session s = queue.get(i);
-                    if (session.getRank().getId() > s.getRank().getId())
-                    {
+                    if (session.getRank().getId() > s.getRank().getId()) {
                         queue.add(i, session);
                         DesireHub.getLangHandler().sendRenderMessage(session, "queue.location", true, false, "{server}", server.getName(), "{position}", String.valueOf(server.getQueueLocation(session)));
                         player.closeInventory();
@@ -129,13 +155,10 @@ public class ServerHandler extends BasicDAO<Server, Long>
                     }
                 }
 
-                if (!queue.contains(session))
-                {
+                if (!queue.contains(session)) {
                     server.addToQueue(session);
                 }
-            }
-            else
-            {
+            } else {
                 server.addToQueue(session);
             }
         }
