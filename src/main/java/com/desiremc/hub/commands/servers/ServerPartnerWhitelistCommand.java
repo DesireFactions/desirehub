@@ -27,7 +27,7 @@ public class ServerPartnerWhitelistCommand extends ValidCommand {
     public void validRun(Session sender, String label[], List<CommandArgument<?>> args) {
         Server server = (Server) args.get(0).getValue();
 
-        server.toggleWhitelisted();
+        server.togglePartnerWhitelisted();
         ServerHandler.getInstance().save(server);
 
         DesireHub.getLangHandler().sendRenderMessage(sender, "server.whitelisted", true, false, "{server}", server.getName(), "{status}", server.getWhitelisted());
