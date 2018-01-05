@@ -6,8 +6,9 @@ public class ServerCommand extends ValidBaseCommand
 {
     public ServerCommand()
     {
-        super("server", "All server management commands.", new String[] {"servers"});
+        super("servers", "All server management commands.", new String[]{});
 
         addSubCommand(new ServerWhitelistCommand());
+        addSubCommand(new ServerPartnerWhitelistCommand());
     }
 }

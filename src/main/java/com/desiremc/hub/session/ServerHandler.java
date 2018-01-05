@@ -1,20 +1,7 @@
 package com.desiremc.hub.session;
 
-import static com.mongodb.client.model.Filters.eq;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.Document;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.mongodb.morphia.dao.BasicDAO;
-
 import com.desiremc.core.DesireCore;
-import com.desiremc.core.session.DeathBan;
-import com.desiremc.core.session.DeathBanHandler;
-import com.desiremc.core.session.Session;
-import com.desiremc.core.session.SessionHandler;
+import com.desiremc.core.session.*;
 import com.desiremc.core.utils.DateUtils;
 import com.desiremc.hub.DesireHub;
 import com.desiremc.hub.gui.ServerGUI;
@@ -23,6 +10,15 @@ import com.google.common.io.ByteStreams;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.mongodb.morphia.dao.BasicDAO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 public class ServerHandler extends BasicDAO<Server, Long>
 {
@@ -75,6 +71,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
                 server.setOnline(search.getOnline());
                 server.setMaxCount(search.getSlots());
                 server.setWhitelisted(search.getWhitelisted());
+                server.setPartnerWhitelisted(search.getPartnerWhitelisted());
                 server.update();
             }
         }
@@ -105,7 +102,8 @@ public class ServerHandler extends BasicDAO<Server, Long>
             }
         }
 
-        if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus() && (!server.getWhitelisted() || session.getRank().isStaff()))
+        if ((server.getSlots() > server.getOnline() || session.getRank().canAutoLogin()) && server.getStatus()
+                && ((!server.getWhitelisted() || session.getRank().isStaff()) || (!server.getPartnerWhitelisted() || (session.getRank() == Rank.PARTNER || session.getRank() == Rank.YOUTUBER))))
         {
             sendToServer(server, player);
             clearQueues(session);

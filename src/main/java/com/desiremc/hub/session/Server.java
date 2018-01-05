@@ -1,16 +1,15 @@
 package com.desiremc.hub.session;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-
+import com.desiremc.core.session.Session;
+import com.desiremc.core.session.SessionHandler;
 import org.bukkit.entity.Player;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Transient;
 
-import com.desiremc.core.session.Session;
-import com.desiremc.core.session.SessionHandler;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 @Entity(value = "servers", noClassnameStored = true)
 public class Server
@@ -30,6 +29,8 @@ public class Server
     private boolean status;
 
     private boolean whitelisted;
+
+    private boolean partnerWhitelisted;
 
     @Transient
     private List<Session> queue;
@@ -105,6 +106,18 @@ public class Server
     public void toggleWhitelisted()
     {
         this.whitelisted = !whitelisted;
+    }
+
+    public boolean getPartnerWhitelisted() {
+        return partnerWhitelisted;
+    }
+
+    public void setPartnerWhitelisted(boolean partnerWhitelisted) {
+        this.partnerWhitelisted = partnerWhitelisted;
+    }
+
+    public void togglePartnerWhitelisted() {
+        this.partnerWhitelisted = !partnerWhitelisted;
     }
 
     public void addToQueue(Session s)
