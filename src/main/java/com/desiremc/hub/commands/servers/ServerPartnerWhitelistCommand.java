@@ -30,6 +30,6 @@ public class ServerPartnerWhitelistCommand extends ValidCommand {
         server.togglePartnerWhitelisted();
         ServerHandler.getInstance().save(server);
 
-        DesireHub.getLangHandler().sendRenderMessage(sender, "server.whitelisted", true, false, "{server}", server.getName(), "{status}", server.getWhitelisted());
+        DesireHub.getLangHandler().sendRenderMessage(sender, "server.partner", true, false, "{server}", server.getName(), "{status}", server.getPartnerWhitelisted());
     }
 }

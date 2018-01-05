@@ -110,7 +110,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
             return;
         }*/
 
-        if (!server.getPartnerWhitelisted()) {
+        if (server.getPartnerWhitelisted()) {
             if (session.getRank() == Rank.PARTNER || session.getRank() == Rank.YOUTUBER) {
                 System.out.println("Partner send");
                 sendToServer(server, player);

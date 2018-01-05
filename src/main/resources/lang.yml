@@ -50,3 +50,4 @@ teleport:
 server:
   not_found: '&7That &bserver&7 was not found.'
   whitelisted: '&7You have set &b{server}&7''s whitelist to {status}.'
+  partner: '&7You have set &b{server}&7''s partner whitelist to {status}.'
