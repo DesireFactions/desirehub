@@ -121,7 +121,7 @@ public class EntityListener implements Listener
         int x = Math.abs(event.getPlayer().getLocation().getBlockX());
         int z = Math.abs(event.getPlayer().getLocation().getBlockZ());
 
-        if (event.getTo().getY() > 0 || (x < 200 && z < 200))
+        if (event.getTo().getY() > 0 && x < 100 && z < 100)
         {
             return;
         }
