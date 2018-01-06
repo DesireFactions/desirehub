@@ -103,7 +103,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
         }
 
         if (server.getPartnerWhitelisted()) {
-            if (session.getRank() == Rank.PARTNER || session.getRank() == Rank.YOUTUBER) {
+            if (session.getRank() == Rank.PARTNER || session.getRank() == Rank.YOUTUBER && server.getStatus()) {
                 sendToServer(server, player);
                 clearQueues(session);
                 return;
@@ -111,7 +111,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
         }
 
         if (server.getWhitelisted()) {
-            if (session.getRank().isStaff()) {
+            if (session.getRank().isStaff() && server.getStatus()) {
                 sendToServer(server, player);
                 clearQueues(session);
                 return;
@@ -122,7 +122,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
         }
 
         if (server.getSlots() > server.getOnline()) {
-            if (session.getRank().canAutoLogin()) {
+            if (session.getRank().canAutoLogin() && server.getStatus()) {
                 sendToServer(server, player);
                 clearQueues(session);
             } else {
