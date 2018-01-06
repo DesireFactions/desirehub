@@ -225,6 +225,7 @@ public class ServerHandler extends BasicDAO<Server, Long>
 
         for (Server server : getServers())
         {
+            System.out.println(server.getName() + ": " + server.getOnline());
             count += server.getOnline();
         }
         return count;
