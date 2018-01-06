@@ -1,5 +1,8 @@
 package com.desiremc.hub.listeners;
 
+import com.desiremc.core.staff.StaffHandler;
+import com.desiremc.hub.DesireHub;
+import com.desiremc.hub.commands.spawn.SpawnCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -7,20 +10,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-
-import com.desiremc.core.staff.StaffHandler;
-import com.desiremc.hub.DesireHub;
-import com.desiremc.hub.commands.spawn.SpawnCommand;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.player.*;
 
 public class EntityListener implements Listener
 {
@@ -127,7 +118,10 @@ public class EntityListener implements Listener
     @EventHandler
     public void onMove(PlayerMoveEvent event)
     {
-        if (event.getTo().getY() > 0)
+        int x = Math.abs(event.getPlayer().getLocation().getBlockX());
+        int z = Math.abs(event.getPlayer().getLocation().getBlockZ());
+
+        if (event.getTo().getY() > 0 || (x < 200 && z < 200))
         {
             return;
         }
